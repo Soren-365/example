@@ -1,38 +1,13 @@
-// import PocketBase from 'pocketbase';
 import Link from 'next/link';
-// import styles from './Home.module.css';
 import CreateNote from './CreateNote';
-// import { supabase } from 'lib/supabaseClient';
-
-// do not cache this page
-// export const revalidate = 0
-// import 'server-only'
-
-// import { createClient } from 'lib/utils/supabase-server'
-// import { supabase} from 'lib/utils/supabaseClient'
-import { Suspense } from 'react'
+import '../globals.css';
+import { Suspense } from 'react';
 import Notes from './Notes';
 import NotesFromSupabase from './NotesFromSupabase';
 
-async function getNotes() {
-  // const db = new PocketBase('http://127.0.0.1:8090');
-  // const result = await db.records.getList('notes');
-
-  // const { data } = await supabase.from('posts').select('*')
-
-  // return <pre>{JSON.stringify({ data }, null, 2)}</pre>
-
-  // const supabase = createClient()
-  // console.log("supabase", supabase)
-  // let { data, error } = await supabase.from('countries').select()
-  // console.log("data", data, error)
-  // return {
-  //   props: {
-  //    countries: data
-  //   },
-  // }
+async function getNotesDesc() {
   return new Promise<string>((resolve) =>
-    setTimeout(() => resolve('Product information ready for SEO'), 100),
+    setTimeout(() => resolve('A delayed headline (100ms)'), 100),
   );
 }
 
@@ -44,32 +19,50 @@ async function getNotes() {
 //   preferredRegion = 'auto'
 
 export default async function Page() {
-  const description = (await getNotes()) as string;
+  const getNotesDescription = (await getNotesDesc()) as string;
   // console.log("countries", countries)
   return (
     <>
-    <ul>
-      {/* {countries.map((country) => (
+      <div className="py-10">
+        <header>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
+              Notes
+            </h1>
+          </div>
+        </header>
+        <main>
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <ul>
+              {/* {countries.map((country) => (
         <li key={country.id}>{country.name}</li>
       ))} */}
-      <li>hey</li>
 
-      <li>you</li>
-      <li>{description}</li>
-     
-    </ul>
-    <div>Fake fetching with setTimeout 2sec, streaming example:</div>
-     <Suspense fallback={<div>loading...</div>}>
-     {/* @ts-expect-error Async Server Component*/}
-     <Notes />
-     </Suspense>
-     <hr/>
-     <div>fetching from supabase, also with ssr streaming:</div>
-     <Suspense fallback={<div>loading...</div>}>
-     {/* @ts-expect-error Async Server Component*/}
-     <NotesFromSupabase />
-     </Suspense>
-     </>
+              <li>{getNotesDescription}</li>
+            </ul>
+            <div className="py-10"> 
+            <div>Fake fetching with setTimeout (2), streaming example:</div>
+            <Suspense fallback={<div>loading...</div>}>
+              {/* @ts-expect-error Async Server Component*/}
+              <Notes />
+            </Suspense>
+            <hr />
+            </div>
+            <div>fetching from supabase, also ssr streaming (html + styles on server, but tailwind is not working for the moment):</div>
+            <div className="border-b border-gray-200 bg-white px-4 py-10 sm:px-6">
+              <h3 className="text-base font-semibold leading-6 text-gray-300">
+                Notes
+              </h3>
+
+              <Suspense fallback={<div>loading...</div>}>
+                {/* @ts-expect-error Async Server Component*/}
+                <NotesFromSupabase />
+              </Suspense>
+            </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
 
