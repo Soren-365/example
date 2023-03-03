@@ -51,19 +51,19 @@ export interface Database {
       note: {
         Row: {
           content: string
-          createdat: string | null
+          createdat: string
           id: number
           title: string
         }
         Insert: {
           content: string
-          createdat?: string | null
+          createdat?: string
           id?: number
           title: string
         }
         Update: {
           content?: string
-          createdat?: string | null
+          createdat?: string
           id?: number
           title?: string
         }

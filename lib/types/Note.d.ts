@@ -1,27 +1,26 @@
-// declare the class
+import type { TableTypes } from './database';
 
-import type { Database } from "@/lib/db-generated";
+type Note = Pick<TableTypes, 'note'> 
 
+export interface INote<T extends keyof TableTypes= 'note'> {
+    note: Pick<TableTypes, T>;
+}
 
-// export type Note = Database.Public.Tables.note.Row
-
-
-
-export class Note {
-    id = 0;
+export class Note implements INote {
+id = 0;
 title = '';
 content = '';
 createdat = 'some time';
 }
 
 // the interface (we use the type)
-export interface INote extends Note {}
+// export interface INote extends Note {}
 
-// the normal typescript type
-export type TNote = Array<keyof INote>;
+// the array type
+export type TNoteStringArray = Array<keyof INote>;
 
 // javascript array of the keys
-export const PNote: TNote = Object.keys(new Note()) as TNote;
+export const PNote: TNote = Object.keys(new Note()) as TNoteStringArray;
 
 
 // ////////////////// ExchangeFilters ///////////////

@@ -25,7 +25,7 @@ export default async function Page() {
     <>
       <div className="py-10">
         <header>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
               Notes
             </h1>
@@ -48,8 +48,8 @@ export default async function Page() {
             </Suspense>
             <hr />
             </div>
-            <div>fetching from supabase, also ssr streaming (html + styles on server, but tailwind is not working for the moment):</div>
-            <div className="border-b border-gray-200 bg-white px-4 py-10 sm:px-6">
+            <div>fetching from supabase, also ssr streaming (html + js + styles, classes, tailwind):</div>
+            <div className="px-4 py-10 bg-white border-b border-gray-200 sm:px-6">
               <h3 className="text-base font-semibold leading-6 text-gray-300">
                 Notes
               </h3>
