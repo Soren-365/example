@@ -1,10 +1,10 @@
 import { supabase } from 'lib/utils/supabaseClient';
 import Image from 'next/image';
 // import type { Note } from 'lib/types/Note'
-import { INote } from 'lib/types/Note';
+// import { INote } from 'lib/types/Note';
 import { PostgrestError } from '@supabase/supabase-js';
-import { PostgrestSingleResponse } from '@supabase/postgrest-js';
-import type { TableTypes, PublicTypes } from '@/lib/types/database.types';
+import { PostgrestSingleResponse, PostgrestResponseFailure } from '@supabase/postgrest-js';
+// import type { TableTypes, PublicTypes } from '@/lib/types/database.types';
 import Notes from './Notes';
 
 
@@ -22,11 +22,11 @@ import Notes from './Notes';
   const string = JSON.stringify({ data }, null, 2);
 
 
-  return data;
+  return data ;
 };
 
 async function NotesFromSupabase() {
-  const data = await notesFetch();
+  const data= await notesFetch();
 
   console.log('data', data, typeof data);
   // <div>{notes}

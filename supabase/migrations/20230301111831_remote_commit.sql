@@ -63,39 +63,6 @@ SET default_tablespace = '';
 SET default_table_access_method = "heap";
 
 --
--- Name: countries; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE "public"."countries" (
-    "id" integer NOT NULL,
-    "name" character varying(255) NOT NULL
-);
-
-
-ALTER TABLE "public"."countries" OWNER TO "postgres";
-
---
--- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE "public"."countries_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE "public"."countries_id_seq" OWNER TO "postgres";
-
---
--- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE "public"."countries_id_seq" OWNED BY "public"."countries"."id";
-
-
 --
 -- Name: note; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -133,11 +100,6 @@ ALTER SEQUENCE "public"."note_id_seq" OWNED BY "public"."note"."id";
 
 
 --
--- Name: countries id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "public"."countries" ALTER COLUMN "id" SET DEFAULT "nextval"('"public"."countries_id_seq"'::"regclass");
-
 
 --
 -- Name: note id; Type: DEFAULT; Schema: public; Owner: postgres
@@ -145,13 +107,6 @@ ALTER TABLE ONLY "public"."countries" ALTER COLUMN "id" SET DEFAULT "nextval"('"
 
 ALTER TABLE ONLY "public"."note" ALTER COLUMN "id" SET DEFAULT "nextval"('"public"."note_id_seq"'::"regclass");
 
-
---
--- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "public"."countries"
-    ADD CONSTRAINT "countries_pkey" PRIMARY KEY ("id");
 
 
 --
@@ -1373,22 +1328,6 @@ GRANT ALL ON TABLE "pgsodium"."masking_rule" TO "pgsodium_keyholder";
 GRANT ALL ON TABLE "pgsodium"."mask_columns" TO "pgsodium_keyholder";
 
 
---
--- Name: TABLE "countries"; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON TABLE "public"."countries" TO "anon";
-GRANT ALL ON TABLE "public"."countries" TO "authenticated";
-GRANT ALL ON TABLE "public"."countries" TO "service_role";
-
-
---
--- Name: SEQUENCE "countries_id_seq"; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT ALL ON SEQUENCE "public"."countries_id_seq" TO "anon";
-GRANT ALL ON SEQUENCE "public"."countries_id_seq" TO "authenticated";
-GRANT ALL ON SEQUENCE "public"."countries_id_seq" TO "service_role";
 
 
 --
