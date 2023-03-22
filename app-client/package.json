@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
-    "db-local-types": "supabase gen types typescript --local > lib/types/db-generated.ts ",
+    "db-local-types": "supabase gen types typescript --local > lib/types/database.types.ts ",
     "tailwind-link": "npx tailwindcss -i ./lib/styles/input.css -o ./app/globals.css --watch"
   },
   "prettier": {

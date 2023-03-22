@@ -17,10 +17,10 @@ export interface Database {
     Functions: {
       graphql: {
         Args: {
-          operationName: string
-          query: string
-          variables: Json
-          extensions: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
         }
         Returns: Json
       }
@@ -34,38 +34,304 @@ export interface Database {
   }
   public: {
     Tables: {
-      countries: {
+      app: {
         Row: {
+          admin: string | null
+          createdAt: string
           id: number
-          name: string
+          logo_url: string
+          url_name: string
         }
         Insert: {
-          id?: number
-          name: string
+          admin?: string | null
+          createdAt?: string
+          id?: never
+          logo_url: string
+          url_name: string
         }
         Update: {
-          id?: number
+          admin?: string | null
+          createdAt?: string
+          id?: never
+          logo_url?: string
+          url_name?: string
+        }
+      }
+      module_section: {
+        Row: {
+          createdAt: string
+          id: number
+          module_section_type: number
+          page_module: number
+          record_data: number | null
+          record_filter: number | null
+          record_type: number | null
+          richtext: string | null
+          sectiondata: Json
+          title: string
+          vertical_page_position: number | null
+        }
+        Insert: {
+          createdAt?: string
+          id?: never
+          module_section_type: number
+          page_module: number
+          record_data?: number | null
+          record_filter?: number | null
+          record_type?: number | null
+          richtext?: string | null
+          sectiondata: Json
+          title: string
+          vertical_page_position?: number | null
+        }
+        Update: {
+          createdAt?: string
+          id?: never
+          module_section_type?: number
+          page_module?: number
+          record_data?: number | null
+          record_filter?: number | null
+          record_type?: number | null
+          richtext?: string | null
+          sectiondata?: Json
+          title?: string
+          vertical_page_position?: number | null
+        }
+      }
+      module_section_type: {
+        Row: {
+          createdAt: string
+          id: number
+          name: string
+          record_type: number
+          renderfunction: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: never
+          name: string
+          record_type: number
+          renderfunction: string
+        }
+        Update: {
+          createdAt?: string
+          id?: never
           name?: string
+          record_type?: number
+          renderfunction?: string
         }
       }
       note: {
         Row: {
           content: string
-          createdat: string
+          createdat: string | null
           id: number
           title: string
         }
         Insert: {
           content: string
-          createdat?: string
+          createdat?: string | null
           id?: number
           title: string
         }
         Update: {
           content?: string
-          createdat?: string
+          createdat?: string | null
           id?: number
           title?: string
+        }
+      }
+      page_module: {
+        Row: {
+          app: string
+          createdAt: string
+          id: number
+          title: string
+          url_name: string
+        }
+        Insert: {
+          app: string
+          createdAt?: string
+          id?: never
+          title: string
+          url_name: string
+        }
+        Update: {
+          app?: string
+          createdAt?: string
+          id?: never
+          title?: string
+          url_name?: string
+        }
+      }
+      page_record: {
+        Row: {
+          app: string
+          createdAt: string
+          description: string | null
+          id: number
+          record_data: number
+          record_filter: number
+          record_type: number
+          title: string
+          url_name: string
+        }
+        Insert: {
+          app: string
+          createdAt?: string
+          description?: string | null
+          id?: never
+          record_data: number
+          record_filter: number
+          record_type: number
+          title: string
+          url_name: string
+        }
+        Update: {
+          app?: string
+          createdAt?: string
+          description?: string | null
+          id?: never
+          record_data?: number
+          record_filter?: number
+          record_type?: number
+          title?: string
+          url_name?: string
+        }
+      }
+      page_record_record: {
+        Row: {
+          createdAt: string
+          id: number
+          linked_record: number
+          page_record: number
+        }
+        Insert: {
+          createdAt?: string
+          id?: never
+          linked_record: number
+          page_record: number
+        }
+        Update: {
+          createdAt?: string
+          id?: never
+          linked_record?: number
+          page_record?: number
+        }
+      }
+      record_data: {
+        Row: {
+          createdAt: string
+          data: Json
+          id: number
+          record_type: number
+        }
+        Insert: {
+          createdAt?: string
+          data: Json
+          id?: never
+          record_type: number
+        }
+        Update: {
+          createdAt?: string
+          data?: Json
+          id?: never
+          record_type?: number
+        }
+      }
+      record_filter: {
+        Row: {
+          app: number
+          createdAt: string
+          filter_record_jsonkeys: string[]
+          id: number
+          record_type: number
+        }
+        Insert: {
+          app: number
+          createdAt?: string
+          filter_record_jsonkeys: string[]
+          id?: never
+          record_type: number
+        }
+        Update: {
+          app?: number
+          createdAt?: string
+          filter_record_jsonkeys?: string[]
+          id?: never
+          record_type?: number
+        }
+      }
+      record_section: {
+        Row: {
+          createdAt: string
+          id: number
+          page_record: number
+          record_section_type: number
+          sectiondata: Json | null
+          title: string
+          vertical_page_position: number
+        }
+        Insert: {
+          createdAt?: string
+          id?: never
+          page_record: number
+          record_section_type: number
+          sectiondata?: Json | null
+          title: string
+          vertical_page_position: number
+        }
+        Update: {
+          createdAt?: string
+          id?: never
+          page_record?: number
+          record_section_type?: number
+          sectiondata?: Json | null
+          title?: string
+          vertical_page_position?: number
+        }
+      }
+      record_section_type: {
+        Row: {
+          createdAt: string
+          id: number
+          name: string
+          record_type: number
+          renderfunction: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: never
+          name: string
+          record_type: number
+          renderfunction: string
+        }
+        Update: {
+          createdAt?: string
+          id?: never
+          name?: string
+          record_type?: number
+          renderfunction?: string
+        }
+      }
+      record_type: {
+        Row: {
+          createdAt: string
+          data_jsonschema: string
+          id: number
+          name: string
+        }
+        Insert: {
+          createdAt?: string
+          data_jsonschema: string
+          id?: never
+          name: string
+        }
+        Update: {
+          createdAt?: string
+          data_jsonschema?: string
+          id?: never
+          name?: string
         }
       }
     }
@@ -86,7 +352,10 @@ export interface Database {
     Tables: {
       buckets: {
         Row: {
+          allowed_mime_types: string[] | null
+          avif_autodetection: boolean | null
           created_at: string | null
+          file_size_limit: number | null
           id: string
           name: string
           owner: string | null
@@ -94,7 +363,10 @@ export interface Database {
           updated_at: string | null
         }
         Insert: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
           created_at?: string | null
+          file_size_limit?: number | null
           id: string
           name: string
           owner?: string | null
@@ -102,7 +374,10 @@ export interface Database {
           updated_at?: string | null
         }
         Update: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
           created_at?: string | null
+          file_size_limit?: number | null
           id?: string
           name?: string
           owner?: string | null
@@ -171,31 +446,40 @@ export interface Database {
     }
     Functions: {
       extension: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       filename: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       foldername: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string[]
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
-        Returns: { size: number; bucket_id: string }[]
+        Returns: {
+          size: number
+          bucket_id: string
+        }[]
       }
       search: {
         Args: {
           prefix: string
           bucketname: string
-          limits: number
-          levels: number
-          offsets: number
-          search: string
-          sortcolumn: string
-          sortorder: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
         }
         Returns: {
           name: string

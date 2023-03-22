@@ -11,6 +11,7 @@ import type { Database } from './database.types';
 //   }
 
 export type PublicTypes = Pick<Database, 'public'>
-export type TableTypes = Pick<PublicTypes["public"], 'Tables'>;
+export type TableTypes = Pick<PublicTypes["public"], 'Tables'>["Tables"];
 
-export type Note = Pick<TableTypes["Tables"], 'note'>;
+export type PageModuleDb = TableTypes["page_module"];
+export type AppDb = TableTypes["page_module"];

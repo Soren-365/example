@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import CreateNote from './CreateNote';
+
 import '../globals.css';
 import { Key, Suspense } from 'react';
 import { supabase } from 'lib/utils/supabaseClient';
@@ -7,53 +7,60 @@ import React from 'react';
 import Image from 'next/image';
 import moduleIcon from 'lib/images/svgs/module.svg';
 import './styles.css'
-const getAppData = async (appName) => {
+import { PostgrestError } from '@supabase/supabase-js';
+
+
+
+const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
   console.log('appName', appName);
   const { data, error } = await supabase
     .from('app')
     .select(`url_name, id`)
     .eq('url_name', appName);
   if (error) {
-    console.log('Error', error);
+    console.log('Error', error);  
+    throw new Error(`Error from db with app name: ${appName}`);  
   }
-  console.log('data', JSON.stringify(data[0], null, 2));
-  return data[0];
+  if (!data) {
+    throw new Error(`ERROR: No Data in DB for this app name: ${appName}`);
+  }
+
+   console.log('data', JSON.stringify(data, null, 2));
+  return data
+  
 };
 
-const getModuleData = async (appName) => {
+const getPageModuleData = async (appName: AppPageProps["params"]["appName"]) => {
   console.log('appName', appName);
   const { data, error } = await supabase
     .from('page_module')
     .select(`title, id, url_name`)
     .eq('app', appName);
   if (error) {
-    console.log('Error', error);
+    console.log('Error', error);    
   }
   console.log('data', JSON.stringify(data, null, 2));
   return data;
 };
 
-type AppData = {
-    id: Key;
-  url_name: string;
-};
+interface AppPageProps {
+  params: {appName: string}
+}
 
-type ModuleData = {
-  id: Key;
-  title: string;
-  url_name: string;
-};
+type AppData = Awaited<ReturnType<typeof getAppData>> 
+type PageModuleData = Awaited<ReturnType<typeof getPageModuleData>> 
 
-export default async function Page({ params: { appName } }) {
+export default async function Page({ params: { appName } }: AppPageProps) {
   //   const getNotesDescription = (await getNotesDesc()) as string;
   // console.log("countries", countries)
+
+  
   const appData = getAppData(appName);
-  const moduleData = getModuleData(appName);
+  const moduleData = getPageModuleData(appName);
   //   console.log('appData', appData, typeof appData);
 
   // Wait for the promises to resolve
-  const [app, modules]: [AppData | null, ModuleData[] | null] =
-    await Promise.all([appData, moduleData]);
+  const [app, modules]: [AppData, PageModuleData ] = await Promise.all([appData, moduleData]);
 
   console.log('app', app, typeof app);
   console.log('modules', modules, typeof modules);
@@ -64,7 +71,7 @@ export default async function Page({ params: { appName } }) {
         <header>
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
-            {app.url_name} app
+            {app[0].url_name} app
             </h1>
           </div>
         </header>
@@ -81,7 +88,7 @@ export default async function Page({ params: { appName } }) {
                       <ul role="list" className="divide-y divide-gray-200">
                         {modules?.map((module) => (
                           <li key={module.id}>
-                            <a href={`/${app.url_name}/${module.url_name}`} className="block hover:bg-gray-50">
+                            <a href={`/${app[0].url_name}/${module.url_name}`} className="block hover:bg-gray-50">
                               <div className="flex items-center px-4 py-4 sm:px-6">
                                 <div className="flex min-w-0 flex-1 items-center">
                                   <div
