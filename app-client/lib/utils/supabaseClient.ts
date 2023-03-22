@@ -10,5 +10,7 @@ if (process.env.DB_LOCATION === 'local_db') {
   anon_key = process.env.SUPABASE_LOCAL_ANON_KEY as string
 }
 
+console.log("db envs", url, anon_key)
+console.log("creating db link")
 // export const supabase = createClient();
 export const supabase = createClient<Database>(url, anon_key)
