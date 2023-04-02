@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS "module_section" (
     "title" text   NOT NULL,
     "module_section_type" bigint NOT NULL,
     "richtext" text, 
-    "sectiondata" jsonb   NOT NULL,
+    "sectiondata" jsonb,
     "page_module" bigint NOT NULL,
     "record_type" bigint,
     "record_filter" bigint,

@@ -62,7 +62,7 @@ export interface Database {
           createdAt: string
           id: number
           module_section_type: number
-          page_module: number
+          page_module: string
           record_data: number | null
           record_filter: number | null
           record_type: number | null
@@ -75,7 +75,7 @@ export interface Database {
           createdAt?: string
           id?: never
           module_section_type: number
-          page_module: number
+          page_module: string
           record_data?: number | null
           record_filter?: number | null
           record_type?: number | null
@@ -88,7 +88,7 @@ export interface Database {
           createdAt?: string
           id?: never
           module_section_type?: number
-          page_module?: number
+          page_module?: string
           record_data?: number | null
           record_filter?: number | null
           record_type?: number | null
