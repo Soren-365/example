@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev-turbo": "next dev --turbo",
-    "dev": "cross-env DB_LOCATION=local_db next dev",
-    "dev-remote": "cross-env DB_LOCATION=prod_db next dev",
+    "dev": "cross-env DB_LOCATION=local_db next dev --turbo",
+    "dev-no-turbo": "cross-env DB_LOCATION=local_db next dev",
+    "dev-remote": "cross-env DB_LOCATION=prod_db next dev --turbo",
     "build": "cross-env DB_LOCATION=prod_db next build",
     "start": "next start",
     "lint": "next lint",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/supabase-js": "^2.8.0",
-    "next": "^13.2.3",
+    "next": "^13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

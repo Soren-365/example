@@ -1,5 +1,5 @@
 import { supabase } from 'lib/utils/supabaseClient';
-import ModuleSection from './Section';
+import ModuleSection from './Section_dyn';
 
 interface ModulePageProps {
   params: { appName: string; moduleName: string };
@@ -21,17 +21,32 @@ const getPageModuleData = async (
 ): Promise<moduleSectionData[] | null> => {
   // console.log('moduleName', moduleName);
   // console.log('appName', appName);
+
+// const statement = `WITH person_data as (SELECT * FROM conferati.organization_role a JOIN conferati.person b ON a.person = b.id )
+// SELECT jsonb_agg(c) FROM (SELECT person_data.first_name, person_data.last_name, person_data.title FROM person_data) c`
+
+
+// let { data, error } = await supabase.rpc('module_section_data', {
+//  join_table: 'organization_role',
+//   data_table: 'person'
+// });
+
+
+
   let { data, error } = await supabase.rpc('get_module_section_data', {
-    url_app: appName,
     url_module: moduleName,
+     url_app: appName,
+    
   });
 
   if (error) {
     console.log('Error', error);
   }
-  // console.log('data', JSON.stringify(data, null, 2));
-  return data;
+  console.log('returned ', JSON.stringify(data, null, 2));
+  return data[0].data;
 };
+
+
 
 export type ModuleData = Awaited<ReturnType<typeof getPageModuleData>>;
 
@@ -52,13 +67,13 @@ export default async function Page({
 
 
 
-  // console.log('module data', moduleData);
+  console.log('module data', moduleData);
   return (
-    <>
-      <h1>Module page: {moduleName}</h1>
+    <div className='py-4'>
+     
       {moduleData.map((thisModuleData) => (
         <ModuleSection moduleData={thisModuleData} />
       ))}
-    </>
+    </div>
   );
 }
