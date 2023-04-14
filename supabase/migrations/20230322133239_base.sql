@@ -11,26 +11,28 @@ create table "public"."app" (
 
 create table "public"."module_section" (
     "id" bigint generated always as identity not null,
-    "title" text not null,
+    "title" text,
     "module_section_type" bigint not null,
+    "module_section_data" bigint,
     "richtext" text,
     "sectiondata" jsonb not null,
     "page_module" bigint not null,
-    "record_type" bigint,
-    "record_filter" bigint,
-    "record_data" bigint,
     "vertical_page_position" integer,
+    "section_filter_jsonschema" text ,
     "createdAt" timestamp without time zone not null default now()
 );
+
 
 
 create table "public"."module_section_type" (
     "id" bigint generated always as identity not null,
     "name" text not null,
     "renderfunction" text not null,
-    "record_type" bigint not null,
+    "module_section_data" bigint not null,
     "createdAt" timestamp without time zone not null default now()
 );
+
+
 
 
 create table "public"."note" (
@@ -116,6 +118,7 @@ create table "public"."record_type" (
 );
 
 
+
 alter sequence "public"."note_id_seq" owned by "public"."note"."id";
 
 CREATE UNIQUE INDEX app_url_name_key ON public.app USING btree (url_name);
@@ -152,7 +155,7 @@ CREATE UNIQUE INDEX pk_record_type ON public.record_type USING btree (id);
 
 CREATE UNIQUE INDEX record_filter_id_key ON public.record_filter USING btree (id);
 
-CREATE UNIQUE INDEX record_section_vertical_page_position_key ON public.record_section USING btree (vertical_page_position);
+
 
 CREATE UNIQUE INDEX uc_module_section_vertical_page_position ON public.module_section USING btree (id);
 
@@ -186,23 +189,10 @@ alter table "public"."module_section" add constraint "fk_module_section_module_s
 
 alter table "public"."module_section" validate constraint "fk_module_section_module_section_type";
 
-alter table "public"."module_section" add constraint "fk_module_section_record_data" FOREIGN KEY (record_data) REFERENCES record_data(id) not valid;
 
-alter table "public"."module_section" validate constraint "fk_module_section_record_data";
-
-alter table "public"."module_section" add constraint "fk_module_section_record_filter" FOREIGN KEY (record_filter) REFERENCES record_filter(id) not valid;
-
-alter table "public"."module_section" validate constraint "fk_module_section_record_filter";
-
-alter table "public"."module_section" add constraint "fk_module_section_record_type" FOREIGN KEY (record_type) REFERENCES record_type(id) not valid;
-
-alter table "public"."module_section" validate constraint "fk_module_section_record_type";
 
 alter table "public"."module_section" add constraint "module_section_vertical_page_position_key" UNIQUE using index "module_section_vertical_page_position_key";
 
-alter table "public"."module_section_type" add constraint "fk_module_section_type_record_type" FOREIGN KEY (record_type) REFERENCES record_type(id) not valid;
-
-alter table "public"."module_section_type" validate constraint "fk_module_section_type_record_type";
 
 alter table "public"."page_module" add constraint "fk_page_module_app" FOREIGN KEY (app) REFERENCES app(url_name) not valid;
 
@@ -247,8 +237,6 @@ alter table "public"."record_filter" add constraint "record_filter_id_key" UNIQU
 alter table "public"."record_section" add constraint "fk_record_section_record_section_type" FOREIGN KEY (record_section_type) REFERENCES record_section_type(id) not valid;
 
 alter table "public"."record_section" validate constraint "fk_record_section_record_section_type";
-
-alter table "public"."record_section" add constraint "record_section_vertical_page_position_key" UNIQUE using index "record_section_vertical_page_position_key";
 
 alter table "public"."record_section_type" add constraint "fk_record_section_type_record_type" FOREIGN KEY (record_type) REFERENCES record_type(id) not valid;
 
