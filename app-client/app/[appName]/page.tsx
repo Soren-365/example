@@ -1,18 +1,24 @@
 import Link from 'next/link';
 
 import '../globals.css';
+import './styles.css'
 import { Key, Suspense } from 'react';
 import { supabase } from 'lib/utils/supabaseClient';
 import React from 'react';
 import Image from 'next/image';
 import moduleIcon from 'lib/images/svgs/module.svg';
-import './styles.css'
+
 import { PostgrestError } from '@supabase/supabase-js';
 
+interface AppPageProps {
+  params: {appName: string}
+}
 
 
 const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
-  console.log('appName', appName);
+    
+  // console.log('appName', appName);
+
   const { data, error } = await supabase
     .from('app')
     .select(`url_name, id`)
@@ -25,13 +31,13 @@ const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
     throw new Error(`ERROR: No Data in DB for this app name: ${appName}`);
   }
 
-   console.log('data', JSON.stringify(data, null, 2));
+  //  console.log('data', JSON.stringify(data, null, 2));
   return data
   
 };
 
 const getPageModuleData = async (appName: AppPageProps["params"]["appName"]) => {
-  console.log('appName', appName);
+  // console.log('appName', appName);
   const { data, error } = await supabase
     .from('page_module')
     .select(`title, id, url_name`)
@@ -39,13 +45,10 @@ const getPageModuleData = async (appName: AppPageProps["params"]["appName"]) => 
   if (error) {
     console.log('Error', error);    
   }
-  console.log('data', JSON.stringify(data, null, 2));
+  // console.log('data', JSON.stringify(data, null, 2));
   return data;
 };
 
-interface AppPageProps {
-  params: {appName: string}
-}
 
 type AppData = Awaited<ReturnType<typeof getAppData>> 
 type PageModuleData = Awaited<ReturnType<typeof getPageModuleData>> 
@@ -53,7 +56,7 @@ type PageModuleData = Awaited<ReturnType<typeof getPageModuleData>>
 export default async function Page({ params: { appName } }: AppPageProps) {
   //   const getNotesDescription = (await getNotesDesc()) as string;
   // console.log("countries", countries)
-
+console.log("appName", appName)
   
   const appData = getAppData(appName);
   const moduleData = getPageModuleData(appName);
@@ -67,12 +70,12 @@ export default async function Page({ params: { appName } }: AppPageProps) {
 
   return (
     <>
-      <div className="py-10">
+      <div className="pb-10">
         <header>
           <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
+            {/* <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
             {app[0].url_name} app
-            </h1>
+            </h1> */}
           </div>
         </header>
         <main>
