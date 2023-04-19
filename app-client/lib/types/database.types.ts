@@ -57,67 +57,115 @@ export interface Database {
           url_name?: string
         }
       }
+      data_app_filter: {
+        Row: {
+          app: string
+          createdAt: string
+          filter_jsonkeys: string[]
+          id: number
+          table_name: string
+        }
+        Insert: {
+          app: string
+          createdAt?: string
+          filter_jsonkeys: string[]
+          id?: never
+          table_name: string
+        }
+        Update: {
+          app?: string
+          createdAt?: string
+          filter_jsonkeys?: string[]
+          id?: never
+          table_name?: string
+        }
+      }
+      data_table: {
+        Row: {
+          name: string
+        }
+        Insert: {
+          name: string
+        }
+        Update: {
+          name?: string
+        }
+      }
       module_section: {
         Row: {
           createdAt: string
           id: number
+          module_section_data: number | null
           module_section_type: number
-          page_module: string
-          record_data: number | null
-          record_filter: number | null
-          record_type: number | null
+          page_module: number
           richtext: string | null
-          sectiondata: Json
-          title: string
+          section_filter_jsonschema: string | null
+          sectiondata: Json | null
+          title: string | null
           vertical_page_position: number | null
         }
         Insert: {
           createdAt?: string
           id?: never
+          module_section_data?: number | null
           module_section_type: number
-          page_module: string
-          record_data?: number | null
-          record_filter?: number | null
-          record_type?: number | null
+          page_module: number
           richtext?: string | null
-          sectiondata: Json
-          title: string
+          section_filter_jsonschema?: string | null
+          sectiondata?: Json | null
+          title?: string | null
           vertical_page_position?: number | null
         }
         Update: {
           createdAt?: string
           id?: never
+          module_section_data?: number | null
           module_section_type?: number
-          page_module?: string
-          record_data?: number | null
-          record_filter?: number | null
-          record_type?: number | null
+          page_module?: number
           richtext?: string | null
-          sectiondata?: Json
-          title?: string
+          section_filter_jsonschema?: string | null
+          sectiondata?: Json | null
+          title?: string | null
           vertical_page_position?: number | null
+        }
+      }
+      module_section_data: {
+        Row: {
+          get_section_data_sql: string
+          id: number
+          name: string
+        }
+        Insert: {
+          get_section_data_sql: string
+          id?: never
+          name: string
+        }
+        Update: {
+          get_section_data_sql?: string
+          id?: never
+          name?: string
         }
       }
       module_section_type: {
         Row: {
           createdAt: string
           id: number
+          module_section_data: number
           name: string
-          record_type: number
           renderfunction: string
         }
         Insert: {
           createdAt?: string
           id?: never
+          module_section_data: number
           name: string
-          record_type: number
           renderfunction: string
         }
         Update: {
           createdAt?: string
           id?: never
+          module_section_data?: number
           name?: string
-          record_type?: number
           renderfunction?: string
         }
       }
@@ -339,7 +387,37 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      exec: {
+        Args: {
+          statement: string
+        }
+        Returns: Record<string, unknown>[]
+      }
+      get_module_section_data: {
+        Args: {
+          url_module: string
+          url_app: string
+        }
+        Returns: {
+          data: Json
+        }[]
+      }
+      module_section_data: {
+        Args: {
+          join_table: string
+          data_table: string
+        }
+        Returns: {
+          data: Json
+        }[]
+      }
+      module_section_data_json: {
+        Args: {
+          join_table: string
+          data_table: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

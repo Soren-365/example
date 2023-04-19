@@ -1,10 +1,10 @@
-import { ModuleData, moduleSectionData } from './page';
+import { ModuleData, ModuleSectionData } from './page';
 
 interface ModuleProp {
-  moduleData: NonNullable<moduleSectionData>;
+  moduleData: NonNullable<ModuleSectionData>;
 }
 
-const ModuleSection = ({ moduleData }: ModuleProp) => {
+const ModuleSection = ({ moduleData }: any) => {
   console.log('moduelData', moduleData);
   return (
     <>
@@ -29,21 +29,21 @@ const ModuleSection = ({ moduleData }: ModuleProp) => {
         </div>
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead>
-                  <tr>
+            <div className="inline-block py-2 align-middle sm:px-6 lg:px-8">
+              <table className=" divide-y divide-gray-300">
+                <thead >
+                  <tr >
                     <th
                       scope="col"
                       className="px-6 py-3.5 text-left text-sm font-semibold text-gray-900 w-[100px] "
                     >
-                      First Name
+                      {' '}First Name{' '}
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3.5 text-left text-sm font-semibold text-gray-900 w-[100px]"
                     >
-                      Last name
+                      {' '}Last name{' '}
                     </th>
                     <th
                       scope="col"
@@ -51,16 +51,28 @@ const ModuleSection = ({ moduleData }: ModuleProp) => {
                     >
                       Title
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3.5 text-left text-sm font-semibold text-gray-900 w-[100px]"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3.5 text-left text-sm font-semibold text-gray-900 w-[100px]"
+                    >
+                      Type
+                    </th>
 
                     {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
                   </th> */}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {moduleData.section_data.map((section) => {
+                <tbody className="w-full divide-y divide-gray-200">
+                  {moduleData.section_data.map((section: any) => {
                     return (
-                      <tr key={section.id}>
+                      <tr key={section.org_role_id}>
                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                           {section.first_name}
                         </td>
@@ -70,6 +82,12 @@ const ModuleSection = ({ moduleData }: ModuleProp) => {
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                           {section.title}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {section.name}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {section.type}
                         </td>
                         {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a href="#" className="text-indigo-600 hover:text-indigo-900">

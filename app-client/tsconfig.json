@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "app/notes/NotesFromSupabase.jsx"  ],
+, "app/notes/NotesFromSupabase.jsx", "app/[appName]/[moduleName]/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]

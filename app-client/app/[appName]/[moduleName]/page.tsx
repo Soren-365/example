@@ -1,52 +1,63 @@
 import { supabase } from 'lib/utils/supabaseClient';
 import ModuleSection from './Section_dyn';
+import { Json } from '@/lib/types/database.types';
 
 interface ModulePageProps {
   params: { appName: string; moduleName: string };
 }
 
-export type moduleSectionData = {
-  id: number;
-  data: {
-    name: string;
-    title: string;
-  };
-  record_type: string;
-  module_section: string;
+export type ModuleSectionData = {
+  sectionId: number;
+  section_data: object[];
 };
 
 const getPageModuleData = async (
   moduleName: ModulePageProps['params']['moduleName'],
   appName: ModulePageProps['params']['appName'],
-): Promise<moduleSectionData[] | null> => {
+  ):Promise<any> => {
+// ) => {
   // console.log('moduleName', moduleName);
   // console.log('appName', appName);
 
-// const statement = `WITH person_data as (SELECT * FROM conferati.organization_role a JOIN conferati.person b ON a.person = b.id )
-// SELECT jsonb_agg(c) FROM (SELECT person_data.first_name, person_data.last_name, person_data.title FROM person_data) c`
+  // const statement = `WITH person_data as (SELECT * FROM conferati.organization_role a JOIN conferati.person b ON a.person = b.id )
+  // SELECT jsonb_agg(c) FROM (SELECT person_data.first_name, person_data.last_name, person_data.title FROM person_data) c`
 
+  // let { data, error } = await supabase.rpc('module_section_data', {
+  //  join_table: 'organization_role',
+  //   data_table: 'person'
+  // });
 
-// let { data, error } = await supabase.rpc('module_section_data', {
-//  join_table: 'organization_role',
-//   data_table: 'person'
-// });
-
-
-
-  let { data, error } = await supabase.rpc('get_module_section_data', {
+  console.log("sending data", moduleName, appName)
+  let { data, status, error } = await supabase.rpc('get_module_section_data_with_app_filter', {
     url_module: moduleName,
-     url_app: appName,
-    
+    url_app: appName,
   });
 
-  if (error) {
-    console.log('Error', error);
+  console.log("data", data)
+//   let returnData 
+
+   if (error) {
+     console.log('Error', error);
   }
-  console.log('returned ', JSON.stringify(data, null, 2));
-  return data[0].data;
+//   } else {
+//     console.log('returned ', JSON.stringify(data, null, 2));
+    
+//     // if ((status = 200)) {
+      
+//     //   if (data![0].data !== null) {
+//     //      returnData =data![0].data as ModuleSectionData
+//     //     // console.log(returnData)
+        
+//     //   }
+//     // }
+// returnData = data![0].data.json()
+//   }
+if (data) {
+  return data[0].data 
+} else {
+  return ['']
+}
 };
-
-
 
 export type ModuleData = Awaited<ReturnType<typeof getPageModuleData>>;
 
@@ -55,7 +66,7 @@ export default async function Page({
 }: ModulePageProps) {
   // console.log('module name', moduleName);
 
-  const moduleData: ModuleData = await getPageModuleData(moduleName, appName);
+  const moduleData = await getPageModuleData(moduleName, appName);
 
   // const moduleDataBySection: moduleSectionData[] = (moduleData) => {
   //   let newSections = []
@@ -65,15 +76,16 @@ export default async function Page({
   //   })
   // }
 
-
-
-  console.log('module data', moduleData);
+  console.log('module data', moduleData, moduleData[0]);
   return (
-    <div className='py-4'>
-     
-      {moduleData.map((thisModuleData) => (
-        <ModuleSection moduleData={thisModuleData} />
-      ))}
+    <div className="py-4">
+      {(moduleData.length > 0 && moduleData[0] !== '') ? moduleData?.map((thisModuleData: any) => (
+        <div key={thisModuleData.sectionId}>
+          <ModuleSection moduleData={thisModuleData} />
+        </div>
+      )) : 
+      <div> no data </div>
+      }
     </div>
   );
 }
