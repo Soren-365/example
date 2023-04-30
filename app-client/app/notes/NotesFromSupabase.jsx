@@ -13,7 +13,7 @@ import Notes from './Notes';
   // const supabase = createClient()
 
   // console.log("supabase driver on server", supabase)
-  const { data, error } = await supabase.from('note').select(`id, title, content, createdat`)
+  const { data, error } = await supabase.from('note').select(`id, title, content, created_at`)
 
   if (error) {
     throw new Error(error.message);
