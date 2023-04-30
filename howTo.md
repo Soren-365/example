@@ -1,6 +1,6 @@
 # how to add an app
 
- INSERT INTO app (url_name, logo_url) VALUES ('Corporate', 'logo.png');
+ INSERT INTO app (url_name) VALUES ('Corporate');
 
 
 </br></br></br>
@@ -52,7 +52,7 @@ press 'validate json'
 </br>
 
 ## 4. 
-if you get a valid result you can go ahead and do the INSERT INTO above 
+if you get a valid result you can go ahead and do the INSERT INTO above (remember to first change back the 'Corporate' to $1 in the string)
 
 </br></br></br>
 
