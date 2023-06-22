@@ -98,8 +98,6 @@ export interface Database {
           module_section_data: number
           module_section_type: number
           page_module: number
-          record_data: number | null
-          record_filter: number | null
           record_type: number | null
           richtext: string | null
           sectiondata: Json | null
@@ -112,8 +110,6 @@ export interface Database {
           module_section_data: number
           module_section_type: number
           page_module: number
-          record_data?: number | null
-          record_filter?: number | null
           record_type?: number | null
           richtext?: string | null
           sectiondata?: Json | null
@@ -126,8 +122,6 @@ export interface Database {
           module_section_data?: number
           module_section_type?: number
           page_module?: number
-          record_data?: number | null
-          record_filter?: number | null
           record_type?: number | null
           richtext?: string | null
           sectiondata?: Json | null
@@ -172,26 +166,6 @@ export interface Database {
           renderfunction?: string | null
         }
       }
-      note: {
-        Row: {
-          content: string
-          created_at: string
-          id: number
-          title: string
-        }
-        Insert: {
-          content: string
-          created_at?: string
-          id?: number
-          title: string
-        }
-        Update: {
-          content?: string
-          created_at?: string
-          id?: number
-          title?: string
-        }
-      }
       page_module: {
         Row: {
           app: string
@@ -217,170 +191,75 @@ export interface Database {
       }
       page_record: {
         Row: {
-          app: string
+          app_id: number
           created_at: string
           description: string | null
           id: number
-          record_data: number
-          record_filter: number
           record_type: number
           title: string
-          url_name: string
         }
         Insert: {
-          app: string
+          app_id: number
           created_at?: string
           description?: string | null
           id?: never
-          record_data: number
-          record_filter: number
           record_type: number
           title: string
-          url_name: string
         }
         Update: {
-          app?: string
+          app_id?: number
           created_at?: string
           description?: string | null
           id?: never
-          record_data?: number
-          record_filter?: number
           record_type?: number
           title?: string
-          url_name?: string
-        }
-      }
-      page_record_record: {
-        Row: {
-          created_at: string
-          id: number
-          linked_record: number
-          page_record: number
-        }
-        Insert: {
-          created_at?: string
-          id?: never
-          linked_record: number
-          page_record: number
-        }
-        Update: {
-          created_at?: string
-          id?: never
-          linked_record?: number
-          page_record?: number
-        }
-      }
-      record_data: {
-        Row: {
-          created_at: string
-          data: Json
-          id: number
-          record_type: number
-        }
-        Insert: {
-          created_at?: string
-          data: Json
-          id?: never
-          record_type: number
-        }
-        Update: {
-          created_at?: string
-          data?: Json
-          id?: never
-          record_type?: number
-        }
-      }
-      record_filter: {
-        Row: {
-          app: number
-          created_at: string
-          filter_record_jsonkeys: string[]
-          id: number
-          record_type: number
-        }
-        Insert: {
-          app: number
-          created_at?: string
-          filter_record_jsonkeys: string[]
-          id?: never
-          record_type: number
-        }
-        Update: {
-          app?: number
-          created_at?: string
-          filter_record_jsonkeys?: string[]
-          id?: never
-          record_type?: number
         }
       }
       record_section: {
         Row: {
           created_at: string
+          get_section_data_sql: string | null
           id: number
+          linked_record_type: number | null
           page_record: number
-          record_section_type: number
-          sectiondata: Json | null
-          title: string
+          references_record_type: number | null
+          title: string | null
           vertical_page_position: number
         }
         Insert: {
           created_at?: string
+          get_section_data_sql?: string | null
           id?: never
+          linked_record_type?: number | null
           page_record: number
-          record_section_type: number
-          sectiondata?: Json | null
-          title: string
+          references_record_type?: number | null
+          title?: string | null
           vertical_page_position: number
         }
         Update: {
           created_at?: string
+          get_section_data_sql?: string | null
           id?: never
+          linked_record_type?: number | null
           page_record?: number
-          record_section_type?: number
-          sectiondata?: Json | null
-          title?: string
+          references_record_type?: number | null
+          title?: string | null
           vertical_page_position?: number
-        }
-      }
-      record_section_type: {
-        Row: {
-          created_at: string
-          id: number
-          name: string
-          record_type: number
-          renderfunction: string
-        }
-        Insert: {
-          created_at?: string
-          id?: never
-          name: string
-          record_type: number
-          renderfunction: string
-        }
-        Update: {
-          created_at?: string
-          id?: never
-          name?: string
-          record_type?: number
-          renderfunction?: string
         }
       }
       record_type: {
         Row: {
           created_at: string
-          data_jsonschema: string
           id: number
           name: string
         }
         Insert: {
           created_at?: string
-          data_jsonschema: string
           id?: never
           name: string
         }
         Update: {
           created_at?: string
-          data_jsonschema?: string
           id?: never
           name?: string
         }
@@ -408,6 +287,16 @@ export interface Database {
       get_module_section_data_with_app_filter: {
         Args: {
           url_module: string
+          url_app: string
+        }
+        Returns: {
+          data: Json
+        }[]
+      }
+      get_record_section_data: {
+        Args: {
+          record_id: number
+          record_type: string
           url_app: string
         }
         Returns: {
