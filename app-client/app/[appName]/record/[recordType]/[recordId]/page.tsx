@@ -17,6 +17,38 @@ export type RecordData = {
   record_data: object[];
 };
 
+// const getPageRecordData = async (
+//   recordId: RecordPageProps['params']['recordId'],
+//   appName: RecordPageProps['params']['appName'],
+//   recordType: RecordPageProps['params']['recordType'],
+// ): Promise<any> => {
+//   console.log('sending data', recordId, recordType, appName);
+//   // let { data, status, error } = await supabase.rpc('get_record_section_data', {
+//   //   record_id: parseInt(recordId),
+//   //   record_type: recordType,
+//   //   url_app: appName,
+//   // });
+
+
+// const { data, error } = await supabaseConferati
+// .from(recordType)
+// .select()
+// .eq('id', parseInt(recordId))
+
+
+
+//   if (error) {
+//     console.log('Error', error);
+//   }
+//   if (data) {
+//     return data[0];
+//   } else {
+//     return [''];
+//   }
+// };
+
+
+
 const getPageRecordData = async (
   recordId: RecordPageProps['params']['recordId'],
   appName: RecordPageProps['params']['appName'],
@@ -30,12 +62,15 @@ const getPageRecordData = async (
   // });
 
 
-const { data, error } = await supabaseConferati
-.from(recordType)
-.select()
-.eq('id', parseInt(recordId))
 
-
+  let { data, status, error } = await supabase.rpc(
+    'get_record_section_data_with_section_filter',
+    {
+      record_id: parseInt(recordId),
+      record_type: recordType,
+    },
+  );
+  
 
   if (error) {
     console.log('Error', error);
@@ -46,6 +81,10 @@ const { data, error } = await supabaseConferati
     return [''];
   }
 };
+
+
+
+
 
 export default async function Page({
   params: { appName, recordId, recordType },

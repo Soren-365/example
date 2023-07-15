@@ -22,8 +22,44 @@ interface ModuleProp {
 }
 
 const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
-  console.log('moduelData', moduleData);
-  // console.log('appName', appName);
+  console.log('moduleData', JSON.stringify(moduleData, null, 7));
+
+
+  const rowData = moduleData.section_row_data.map((row, index) => {
+    const transformedRow = [];
+    moduleData.section_column_data.forEach((labelData) => {
+      Object.entries(row).map((entry) => {
+        if (labelData.column_name === entry[0]) {
+          transformedRow[labelData.column_position] = entry[1];
+        }
+      });
+    });
+    return transformedRow;
+  });
+
+  let columns = [];
+
+  moduleData.section_column_data.forEach((labelData) => {
+
+    Object.keys(moduleData.section_row_data[0]).forEach((columnName, index) => {
+      if (labelData.column_name === columnName) {
+        let newLabelData = labelData
+        if (labelData.ui_links_to_record === true) {
+          const linking_ids = moduleData.section_row_data.map( row => row[labelData.record_name])
+        newLabelData = Object.assign(newLabelData, { linking_ids})
+        } 
+       columns[labelData.column_position - 1] = newLabelData;
+      }
+    });
+
+
+
+  });
+
+  // console.log('columns labels', moduleData.section_column_data);
+  // console.log('columns', columns);
+  // console.log('row data', rowData);
+
   return (
     <>
       <Card>
@@ -31,68 +67,80 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
           <TableContainer>
             <Table variant="simple">
               <TableCaption>
-                Section with record type: {moduleData.record_type}
+                {/* Main record type: {moduleData.root_ref_type} */}
               </TableCaption>
-
               <Thead>
                 <Tr>
-                  <Th>Link</Th>
-                  <Th>First Name</Th>
-                  <Th>Last Name</Th>
-                  <Th>Title</Th>
-                  <Th>Name</Th>
-                  <Th>Type</Th>
+                  {columns.map((column) => {
+                    // return <Th key={key}>{key === 'type' ? moduleData.title + ' ': ''}{key}</Th>;
+                    return <Th key={column.label_name}>{column.label_name}</Th>;
+                  })}
                 </Tr>
               </Thead>
               <Tbody>
-                {moduleData?.section_data?.map((module: any) => {
+                {rowData.map((row: any, rowsindex) => {
                   return (
-                    <Tr key={module.id}>
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        <Link
-                          as={NextLink}
-                          href={`/${appName}/record/${moduleData.references_type}/${module.id}`}
-                        >
-                          Go
-                        </Link>
-                      </Td>
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {module.first_name}
-                      </Td>
-
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {module.last_name}
-                      </Td>
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {module.title}
-                      </Td>
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {module.name}
-                      </Td>
-                      <Td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {module.type}
-                      </Td>
+                    <Tr key={rowsindex}>
+                      {row.map((value, index) => {
+                        if (
+                          columns[index - 1]
+                            ?.ui_links_to_record
+                        ) {
+                          return (
+                            <Td
+                              className="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                              key={index}
+                            >
+                              <Link
+                                href={`/${appName}/record/${
+                                  columns[index - 1]
+                                    ?.record_name
+                                }/${columns[index - 1]
+                                  ?.linking_ids[rowsindex] || moduleData.section_row_data[rowsindex].id
+                               
+                                  //   moduleData.section_row_data[rowsindex - 1]
+                                  //     [ columns[index - 1]
+                                  //     ?.record_name]
+                                  // || row.id
+                                }`}
+                                color="blue.400"
+                                _hover={{
+                                  color: 'blue.800',
+                                  textDecoration: 'underline',
+                                }}
+                              >
+                                {value}
+                              </Link>
+                            </Td>
+                          );
+                        } else {
+                          return (
+                            <Td
+                              className="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                              key={index}
+                            >
+                              {value}
+                            </Td>
+                          );
+                        }
+                      })}
                     </Tr>
                   );
                 })}
               </Tbody>
-              {/* <Tfoot>
+
+              {/* 
+             <Tfoot>
       <Tr>
         <Th>-</Th>
         <Th>-</Th>
       </Tr>
-    </Tfoot> */}
+    </Tfoot>
+   */}
             </Table>
           </TableContainer>
         </CardBody>
       </Card>
-
-      {/* <div
-        key={moduleData.sectionId}
-        className="border-b border-gray-200 bg-white px-4 py-12 sm:px-6"
-      >
-      
-      </div> */}
     </>
   );
 };

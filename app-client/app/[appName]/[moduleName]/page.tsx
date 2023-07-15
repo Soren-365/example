@@ -18,7 +18,7 @@ const getPageModuleData = async (
   // ) => {
 
   let { data, status, error } = await supabase.rpc(
-    'get_module_section_data_with_app_filter',
+    'get_module_section_data_with_app_filter_new',
     {
       url_module: moduleName,
       url_app: appName,
@@ -56,8 +56,8 @@ export default async function Page({
   //   })
   // }
 
-  console.log('module data 0', moduleData[0]);
-  console.log('module data 1',moduleData[1]);
+  // console.log('module data 0', moduleData[0]);
+  // console.log('module data 1',moduleData[1]);
   return (
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">
@@ -65,7 +65,7 @@ export default async function Page({
       </div>
       {moduleData.length > 0 && moduleData[0] !== '' ? (
         moduleData?.map((thisModuleData: any) => (
-          <div key={thisModuleData.section_id}>
+          <div key={thisModuleData.section_id} className='py-10'>
             <DynamicModuleSection
               moduleData={thisModuleData}
               appName={appName}
