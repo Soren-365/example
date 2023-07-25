@@ -96,11 +96,11 @@ export default async function Page({
   return (
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">
-        <RecordData recordData={recordData.record_row_data} params={{ appName, recordId, recordType }} />
+        <RecordData recordData={recordData.record_data} recordLabelData={recordData.record_label_data} params={{ appName, recordId, recordType }} />
 
-        {recordData.section_data?.length > 0 &&
-        recordData.section_data[0] !== '' ? (
-          recordData.section_data?.map((thisSectionData: any) => (
+        {recordData.record_sections_data?.length > 0 &&
+        recordData.record_sections_data[0] !== '' ? (
+          recordData.record_sections_data?.map((thisSectionData: any) => (
             <div key={thisSectionData.section_id} className="py-4">
               <RecordSection
                 sectionData={thisSectionData}
