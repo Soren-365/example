@@ -68,6 +68,7 @@ const getPageRecordData = async (
     {
       record_id: parseInt(recordId),
       record_type: recordType,
+      app_name: appName
     },
   );
   
@@ -76,7 +77,7 @@ const getPageRecordData = async (
     console.log('Error', error);
   }
   if (data) {
-    return data[0];
+    return data[0].data;
   } else {
     return [''];
   }
@@ -95,14 +96,14 @@ export default async function Page({
   return (
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">
-        <RecordData recordData={recordData} params={{ appName, recordId, recordType }} />
+        <RecordData recordData={recordData.record_row_data} params={{ appName, recordId, recordType }} />
 
-        {recordData?.section_data?.length > 0 &&
+        {recordData.section_data?.length > 0 &&
         recordData.section_data[0] !== '' ? (
-          recordData?.section_data.map((thisRecordData: any) => (
-            <div key={thisRecordData.sectionId}>
+          recordData.section_data?.map((thisSectionData: any) => (
+            <div key={thisSectionData.section_id} className="py-4">
               <RecordSection
-                sectionData={thisRecordData}
+                sectionData={thisSectionData}
                 params={{ appName, recordId, recordType }}
               />
             </div>

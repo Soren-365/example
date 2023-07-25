@@ -18,7 +18,7 @@ const getPageModuleData = async (
   // ) => {
 
   let { data, status, error } = await supabase.rpc(
-    'get_module_section_data_with_app_filter_new',
+    'get_module_section_data_with_app_filter',
     {
       url_module: moduleName,
       url_app: appName,
