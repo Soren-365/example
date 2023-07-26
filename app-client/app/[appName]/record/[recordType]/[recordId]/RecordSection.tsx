@@ -21,7 +21,7 @@ interface RecordProp {
 
 const RecordSection = ({ sectionData,  params: {appName, recordId, recordType}  }: any) => {
 
-  console.log('sectionData', JSON.stringify(sectionData, null, 7));
+  // console.log('sectionData', JSON.stringify(sectionData, null, 7));
 
 
   const rowData = sectionData.section_row_data.map((row, index) => {
