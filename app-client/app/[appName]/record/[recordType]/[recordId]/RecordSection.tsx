@@ -21,12 +21,14 @@ interface RecordProp {
 
 const RecordSection = ({ sectionData,  params: {appName, recordId, recordType}  }: any) => {
 
-  // console.log('sectionData', JSON.stringify(sectionData, null, 7));
+  console.log('RECORD SECTION all data', JSON.stringify(sectionData, null, 7));
+  let columns: any[] = [];
+ let rowData 
 
-
-  const rowData = sectionData.section_row_data.map((row, index) => {
-    const transformedRow = [];
-    sectionData.section_column_data.forEach((labelData) => {
+if (sectionData?.section_row_data) {
+ rowData = sectionData?.section_row_data.map((row: any, index: number) => {
+    const transformedRow: any[] = [];
+    sectionData?.section_column_data.forEach((labelData: any) => {
       Object.entries(row).map((entry) => {
         if (labelData.column_name === entry[0]) {
           transformedRow[labelData.column_position] = entry[1];
@@ -36,50 +38,50 @@ const RecordSection = ({ sectionData,  params: {appName, recordId, recordType}  
     return transformedRow;
   });
 
-  let columns = [];
 
-  sectionData.section_column_data.forEach((labelData) => {
+  sectionData?.section_column_data.forEach((labelData: any) => {
 
-    Object.keys(sectionData.section_row_data[0]).forEach((columnName, index) => {
+    Object.keys(sectionData?.section_row_data[0]).forEach((columnName, index) => {
       if (labelData.column_name === columnName) {
         let newLabelData = labelData
         if (labelData.ui_links_to_record === true) {
-          const linking_ids = sectionData.section_row_data.map( row => row[labelData.record_name])
+          const linking_ids = sectionData?.section_row_data.map( (row: any) => row[labelData.record_name])
         newLabelData = Object.assign(newLabelData, { linking_ids})
         } 
        columns[labelData.column_position - 1] = newLabelData;
       }
     });
-
-
-
   });
 
-  console.log('columns', columns);
-  console.log('row data', rowData);
+}
+
+// console.log('REC. SECTION columns', columns);
+// console.log('REC. SECTION row data', rowData);
+
   return (
     <>
+    {rowData && 
       <Card>
-        <CardHeader> <Text fontSize='2xl'>{sectionData.title}</Text></CardHeader>
+        <CardHeader> <Text fontSize='ml'>{sectionData.section_title}</Text></CardHeader>
         <CardBody>
           <TableContainer>
             <Table variant="simple">
 
             <Thead>
                 <Tr>
-                  {columns.map((column) => {
+                  {columns?.map((column) => {
                     // return <Th key={key}>{key === 'type' ? moduleData.title + ' ': ''}{key}</Th>;
                     return <Th key={column.label_name}>{column.label_name}</Th>;
                   })}
                 </Tr>
               </Thead>
               <Tbody>
-              {rowData.map((row: any, rowsindex) => {
+              {rowData?.map((row: any, rowsindex: number) => {
                   return (
                     <Tr key={rowsindex}>
-                      {row.map((value, index) => {
+                      {row.map((value: any, index: number) => {
                         if (
-                          columns[index - 1]
+                          columns && columns[index - 1]
                             ?.ui_links_to_record
                         ) {
                           return (
@@ -89,10 +91,10 @@ const RecordSection = ({ sectionData,  params: {appName, recordId, recordType}  
                             >
                               <Link
                                 href={`/${appName}/record/${
-                                  columns[index - 1]
+                                 columns &&  columns[index - 1]
                                     ?.record_name
-                                }/${columns[index - 1]
-                                  ?.linking_ids[rowsindex] || sectionData.section_row_data[rowsindex].id
+                                }/${columns && columns[index - 1]
+                                  ?.linking_ids[rowsindex] || sectionData?.section_row_data[rowsindex].id
                                
                                   //   moduleData.section_row_data[rowsindex - 1]
                                   //     [ columns[index - 1]
@@ -134,6 +136,7 @@ const RecordSection = ({ sectionData,  params: {appName, recordId, recordType}  
           </TableContainer>
         </CardBody>
       </Card>
+}
     </>
   );
 };

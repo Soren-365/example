@@ -92,10 +92,10 @@ export default async function Page({
 }: RecordPageProps) {
   const recordData = await getPageRecordData(recordId, appName, recordType);
 
-  // console.log('record data', recordData);
-  console.log('record sections data', recordData.record_sections_data);
+  console.log('record data', recordData);
+  console.log('record sections data', recordData?.record_sections_data);
   // console.log('record sections data sorted', recordData.record_sections_data.sort(function(a,b){return a.vertical_page_position-b.vertical_page_position}));
-const recordDataSortedByPosition = recordData.record_sections_data.sort(function(a,b){return a.vertical_page_position-b.vertical_page_position})
+const recordDataSortedByPosition = recordData?.record_sections_data?.sort(function(a: any,b: any){return a.vertical_page_position-b.vertical_page_position})
   return (
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">
@@ -112,7 +112,7 @@ const recordDataSortedByPosition = recordData.record_sections_data.sort(function
             </div>
           ))
         ) : (
-          <div> no sections </div>
+          <div>  </div>
         )}
       </div>
     </div>

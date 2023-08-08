@@ -7,6 +7,195 @@ export type Json =
   | Json[]
 
 export interface Database {
+  conferati: {
+    Tables: {
+      app_whitefilter_st: {
+        Row: {
+          app_id: number
+          column_address: string
+          created_at: string | null
+          filter: string
+          id: number
+          table_address: string
+        }
+        Insert: {
+          app_id: number
+          column_address?: string
+          created_at?: string | null
+          filter: string
+          id?: number
+          table_address: string
+        }
+        Update: {
+          app_id?: number
+          column_address?: string
+          created_at?: string | null
+          filter?: string
+          id?: number
+          table_address?: string
+        }
+      }
+      filtertypes_st: {
+        Row: {
+          created_at: string | null
+          id: number
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          type?: string
+        }
+      }
+      organization: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          name: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          name?: string
+          type?: string
+        }
+      }
+      organization_role: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: number
+          organization: number
+          person: number
+          start_date: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: never
+          organization: number
+          person: number
+          start_date?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: never
+          organization?: number
+          person?: number
+          start_date?: string | null
+          title?: string
+        }
+      }
+      person: {
+        Row: {
+          birthdate: string | null
+          created_at: string
+          first_name: string
+          id: number
+          last_name: string
+          local_image_url: string | null
+          wikipedia_page: string | null
+        }
+        Insert: {
+          birthdate?: string | null
+          created_at?: string
+          first_name: string
+          id?: never
+          last_name: string
+          local_image_url?: string | null
+          wikipedia_page?: string | null
+        }
+        Update: {
+          birthdate?: string | null
+          created_at?: string
+          first_name?: string
+          id?: never
+          last_name?: string
+          local_image_url?: string | null
+          wikipedia_page?: string | null
+        }
+      }
+      record_section_blackfilter_st: {
+        Row: {
+          column_address: string
+          created_at: string | null
+          filter: string
+          id: number
+          record_section_id: number
+          table_address: string
+        }
+        Insert: {
+          column_address?: string
+          created_at?: string | null
+          filter: string
+          id?: number
+          record_section_id: number
+          table_address: string
+        }
+        Update: {
+          column_address?: string
+          created_at?: string | null
+          filter?: string
+          id?: number
+          record_section_id?: number
+          table_address?: string
+        }
+      }
+      record_section_whitefilter_st: {
+        Row: {
+          column_address: string
+          created_at: string | null
+          filter: string
+          id: number
+          record_section_id: number
+          table_address: string
+        }
+        Insert: {
+          column_address?: string
+          created_at?: string | null
+          filter: string
+          id?: number
+          record_section_id: number
+          table_address: string
+        }
+        Update: {
+          column_address?: string
+          created_at?: string | null
+          filter?: string
+          id?: number
+          record_section_id?: number
+          table_address?: string
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -57,113 +246,107 @@ export interface Database {
           url_name?: string
         }
       }
-      data_app_filter: {
+      jsonb_column_data: {
         Row: {
-          app: string
-          created_at: string
-          filter_jsonkeys: string[]
-          id: number
-          table_name: string
+          combined: Json | null
         }
         Insert: {
-          app: string
-          created_at?: string
-          filter_jsonkeys: string[]
-          id?: never
-          table_name: string
+          combined?: Json | null
         }
         Update: {
-          app?: string
-          created_at?: string
-          filter_jsonkeys?: string[]
-          id?: never
-          table_name?: string
+          combined?: Json | null
         }
       }
-      data_table: {
+      jsonb_record_label_data: {
         Row: {
-          name: string
+          combined: Json | null
         }
         Insert: {
-          name: string
+          combined?: Json | null
         }
         Update: {
-          name?: string
+          combined?: Json | null
         }
       }
       module_section: {
         Row: {
+          app_filter_address: string | null
           created_at: string
           id: number
+          joining_name: string | null
           module_section_data: number
-          module_section_type: number
           page_module: number
-          record_type: number | null
+          record_name: string
           richtext: string | null
-          sectiondata: Json | null
+          second_parent_name: string | null
           title: string
           vertical_page_position: number | null
         }
         Insert: {
+          app_filter_address?: string | null
           created_at?: string
-          id?: never
+          id?: number
+          joining_name?: string | null
           module_section_data: number
-          module_section_type: number
           page_module: number
-          record_type?: number | null
+          record_name: string
           richtext?: string | null
-          sectiondata?: Json | null
+          second_parent_name?: string | null
           title: string
           vertical_page_position?: number | null
         }
         Update: {
+          app_filter_address?: string | null
           created_at?: string
-          id?: never
+          id?: number
+          joining_name?: string | null
           module_section_data?: number
-          module_section_type?: number
           page_module?: number
-          record_type?: number | null
+          record_name?: string
           richtext?: string | null
-          sectiondata?: Json | null
+          second_parent_name?: string | null
           title?: string
           vertical_page_position?: number | null
         }
       }
-      module_section_data: {
+      module_section_columns_shown: {
         Row: {
-          get_section_data_sql: string
+          column_position: number
           id: number
-          name: string | null
+          module_section_id: number
+          record_type_column_labels_id: number
+          ui_links_to_record: boolean
         }
         Insert: {
-          get_section_data_sql: string
+          column_position: number
           id?: never
-          name?: string | null
+          module_section_id: number
+          record_type_column_labels_id: number
+          ui_links_to_record?: boolean
         }
         Update: {
-          get_section_data_sql?: string
+          column_position?: number
           id?: never
-          name?: string | null
+          module_section_id?: number
+          record_type_column_labels_id?: number
+          ui_links_to_record?: boolean
         }
       }
-      module_section_type: {
+      module_section_data: {
         Row: {
-          created_at: string
+          description: string | null
+          get_section_data_sql: string
           id: number
-          name: string
-          renderfunction: string | null
         }
         Insert: {
-          created_at?: string
+          description?: string | null
+          get_section_data_sql: string
           id?: never
-          name: string
-          renderfunction?: string | null
         }
         Update: {
-          created_at?: string
+          description?: string | null
+          get_section_data_sql?: string
           id?: never
-          name?: string
-          renderfunction?: string | null
         }
       }
       page_module: {
@@ -171,97 +354,163 @@ export interface Database {
           app: string
           created_at: string
           id: number
-          title: string
+          title: string | null
           url_name: string
         }
         Insert: {
           app: string
           created_at?: string
           id?: never
-          title: string
+          title?: string | null
           url_name: string
         }
         Update: {
           app?: string
           created_at?: string
           id?: never
-          title?: string
+          title?: string | null
           url_name?: string
         }
       }
       page_record: {
         Row: {
-          app_id: number
+          app: string
           created_at: string
           description: string | null
           id: number
-          record_type: number
+          record_name: string
           title: string
         }
         Insert: {
-          app_id: number
+          app: string
           created_at?: string
           description?: string | null
           id?: never
-          record_type: number
+          record_name: string
           title: string
         }
         Update: {
-          app_id?: number
+          app?: string
           created_at?: string
           description?: string | null
           id?: never
-          record_type?: number
+          record_name?: string
           title?: string
         }
       }
       record_section: {
         Row: {
-          created_at: string
-          get_section_data_sql: string | null
+          createdAt: string
           id: number
-          linked_record_type: number | null
+          joining_name: string | null
           page_record: number
-          references_record_type: number | null
+          record_section_data: number
+          second_parent_name: string | null
           title: string | null
-          vertical_page_position: number
+          vertical_page_position: number | null
         }
         Insert: {
-          created_at?: string
-          get_section_data_sql?: string | null
+          createdAt?: string
           id?: never
-          linked_record_type?: number | null
+          joining_name?: string | null
           page_record: number
-          references_record_type?: number | null
+          record_section_data: number
+          second_parent_name?: string | null
           title?: string | null
-          vertical_page_position: number
+          vertical_page_position?: number | null
         }
         Update: {
-          created_at?: string
-          get_section_data_sql?: string | null
+          createdAt?: string
           id?: never
-          linked_record_type?: number | null
+          joining_name?: string | null
           page_record?: number
-          references_record_type?: number | null
+          record_section_data?: number
+          second_parent_name?: string | null
           title?: string | null
-          vertical_page_position?: number
+          vertical_page_position?: number | null
+        }
+      }
+      record_section_columns_shown: {
+        Row: {
+          column_position: number | null
+          id: number
+          record_section_id: number
+          record_type_column_labels_id: number
+          ui_links_to_record: boolean
+        }
+        Insert: {
+          column_position?: number | null
+          id?: never
+          record_section_id: number
+          record_type_column_labels_id: number
+          ui_links_to_record?: boolean
+        }
+        Update: {
+          column_position?: number | null
+          id?: never
+          record_section_id?: number
+          record_type_column_labels_id?: number
+          ui_links_to_record?: boolean
+        }
+      }
+      record_section_data: {
+        Row: {
+          description: string
+          get_section_data_sql: string
+          id: number
+        }
+        Insert: {
+          description: string
+          get_section_data_sql: string
+          id?: never
+        }
+        Update: {
+          description?: string
+          get_section_data_sql?: string
+          id?: never
         }
       }
       record_type: {
         Row: {
           created_at: string
+          data_jsonschema: string | null
           id: number
           name: string
         }
         Insert: {
           created_at?: string
+          data_jsonschema?: string | null
           id?: never
           name: string
         }
         Update: {
           created_at?: string
+          data_jsonschema?: string | null
           id?: never
           name?: string
+        }
+      }
+      record_type_column_labels: {
+        Row: {
+          column_name: string
+          id: number
+          is_external_link: boolean
+          label_name: string
+          record_type_id: number
+        }
+        Insert: {
+          column_name: string
+          id?: never
+          is_external_link?: boolean
+          label_name: string
+          record_type_id: number
+        }
+        Update: {
+          column_name?: string
+          id?: never
+          is_external_link?: boolean
+          label_name?: string
+          record_type_id?: number
         }
       }
     }
@@ -269,21 +518,6 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      exec: {
-        Args: {
-          statement: string
-        }
-        Returns: Record<string, unknown>[]
-      }
-      get_module_section_data: {
-        Args: {
-          url_module: string
-          url_app: string
-        }
-        Returns: {
-          data: Json
-        }[]
-      }
       get_module_section_data_with_app_filter: {
         Args: {
           url_module: string
@@ -293,11 +527,11 @@ export interface Database {
           data: Json
         }[]
       }
-      get_record_section_data: {
+      get_record_section_data_with_section_filter: {
         Args: {
           record_id: number
           record_type: string
-          url_app: string
+          app_name: string
         }
         Returns: {
           data: Json
