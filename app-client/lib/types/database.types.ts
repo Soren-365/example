@@ -246,65 +246,43 @@ export interface Database {
           url_name?: string
         }
       }
-      jsonb_column_data: {
-        Row: {
-          combined: Json | null
-        }
-        Insert: {
-          combined?: Json | null
-        }
-        Update: {
-          combined?: Json | null
-        }
-      }
-      jsonb_record_label_data: {
-        Row: {
-          combined: Json | null
-        }
-        Insert: {
-          combined?: Json | null
-        }
-        Update: {
-          combined?: Json | null
-        }
-      }
       module_section: {
         Row: {
-          app_filter_address: string | null
+          app_filter_on_table: string | null
           created_at: string
           id: number
-          joining_name: string | null
+          joining_table: string | null
           module_section_data: number
           page_module: number
-          record_name: string
+          record_table: string
           richtext: string | null
-          second_parent_name: string | null
+          second_parent_table: string | null
           title: string
           vertical_page_position: number | null
         }
         Insert: {
-          app_filter_address?: string | null
+          app_filter_on_table?: string | null
           created_at?: string
-          id?: number
-          joining_name?: string | null
+          id?: never
+          joining_table?: string | null
           module_section_data: number
           page_module: number
-          record_name: string
+          record_table: string
           richtext?: string | null
-          second_parent_name?: string | null
+          second_parent_table?: string | null
           title: string
           vertical_page_position?: number | null
         }
         Update: {
-          app_filter_address?: string | null
+          app_filter_on_table?: string | null
           created_at?: string
-          id?: number
-          joining_name?: string | null
+          id?: never
+          joining_table?: string | null
           module_section_data?: number
           page_module?: number
-          record_name?: string
+          record_table?: string
           richtext?: string | null
-          second_parent_name?: string | null
+          second_parent_table?: string | null
           title?: string
           vertical_page_position?: number | null
         }
@@ -402,30 +380,30 @@ export interface Database {
         Row: {
           createdAt: string
           id: number
-          joining_name: string | null
+          joining_table: string | null
           page_record: number
           record_section_data: number
-          second_parent_name: string | null
+          second_parent_table: string | null
           title: string | null
           vertical_page_position: number | null
         }
         Insert: {
           createdAt?: string
           id?: never
-          joining_name?: string | null
+          joining_table?: string | null
           page_record: number
           record_section_data: number
-          second_parent_name?: string | null
+          second_parent_table?: string | null
           title?: string | null
           vertical_page_position?: number | null
         }
         Update: {
           createdAt?: string
           id?: never
-          joining_name?: string | null
+          joining_table?: string | null
           page_record?: number
           record_section_data?: number
-          second_parent_name?: string | null
+          second_parent_table?: string | null
           title?: string | null
           vertical_page_position?: number | null
         }
