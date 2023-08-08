@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS "public"."record_type_column_labels" (
     "record_type_id" bigint NOT NULL REFERENCES record_type(id),
     "column_name" text   NOT NULL UNIQUE,
     "label_name" text   NOT NULL,
+    "is_external_link" boolean NOT NULL DEFAULT false,
       CONSTRAINT "pk_record_type_column_labels" PRIMARY KEY (
         "record_type_id","column_name"
      )
@@ -51,10 +52,10 @@ CREATE table IF NOT EXISTS "public"."page_module" (
 );
 
 CREATE TABLE IF NOT EXISTS "public"."module_section_columns_shown" (
-    "id" bigint generated always as identity NOT NULL,
+    "id" bigint generated always as identity NOT NULL UNIQUE,
     "module_section_id" bigint,
     "record_type_column_labels_id" bigint,
-    "column_position" integer,
+    "column_position" integer NOT NULL,
     "ui_links_to_record" boolean  NOT NULL DEFAULT false,
     CONSTRAINT "pk_module_section_columns_shown" PRIMARY KEY (
         "module_section_id","record_type_column_labels_id"
@@ -69,11 +70,12 @@ CREATE table IF NOT EXISTS "public"."module_section_data" (
 );
 
 CREATE table IF NOT EXISTS "public"."module_section" (
-    "id" bigint generated always as identity not null,
+    "id" bigint PRIMARY KEY generated always as identity,
     "title" text   NOT NULL,
-    "record_name" text NOT NULL REFERENCES record_type(name),
-    "joining_name" text REFERENCES record_type(name),
-    "second_parent_name" text REFERENCES record_type(name),
+    "record_table" text NOT NULL REFERENCES record_type(name),
+    "joining_table" text REFERENCES record_type(name),
+    "second_parent_table" text REFERENCES record_type(name),
+    "app_filter_on_table" text REFERENCES record_type(name),
     "richtext" text,
     "module_section_data" bigint REFERENCES module_section_data(id) NOT NULL,
     "page_module" bigint NOT NULL REFERENCES page_module(id),
@@ -124,8 +126,8 @@ CREATE table IF NOT EXISTS "public"."record_section" (
     "id" bigint PRIMARY KEY generated always as identity,
     "title" text   NULL,
     "page_record" bigint NOT NULL REFERENCES page_record(id),
-    "joining_name" text REFERENCES record_type(name),
-    "second_parent_name" text REFERENCES record_type(name),
+    "joining_table" text REFERENCES record_type(name),
+    "second_parent_table" text REFERENCES record_type(name),
     "record_section_data" bigint NOT NULL REFERENCES record_section_data(id),
     "vertical_page_position" int NULL,
     "createdAt" TIMESTAMP  DEFAULT now() NOT NULL

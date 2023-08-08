@@ -14,13 +14,13 @@
 
 # How to add a table section query to an app (sometimes the query already exists)
 
-INSERT INTO module_section_data ( get_section_data_sql) VALUES ('WITH filter_settings AS (SELECT filter, table_address, column_address FROM conferati.app_whitefilter_structuretable WHERE app_id = (SELECT id FROM app WHERE url_name = $1))
+INSERT INTO module_section_data ( get_section_data_sql) VALUES ('WITH filter_settings AS (SELECT filter, table_address, column_address FROM conferati.app_whitefilter_st WHERE app_id = (SELECT id FROM app WHERE url_name = $1))
 SELECT json_agg(a) FROM conferati.organization a JOIN filter_settings b ON a.type = b.filter');
 
 in this example the query is:
 
 -
-WITH filter_settings AS (SELECT filter, table_address, column_address FROM conferati.app_whitefilter_structuretable WHERE app_id = (SELECT id FROM app WHERE url_name = $1))
+WITH filter_settings AS (SELECT filter, table_address, column_address FROM conferati.app_whitefilter_st WHERE app_id = (SELECT id FROM app WHERE url_name = $1))
 SELECT json_agg(a) FROM conferati.organization a JOIN filter_settings b ON a.type = b.filter
 -
 
