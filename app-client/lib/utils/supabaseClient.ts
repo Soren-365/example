@@ -18,4 +18,4 @@ console.log("db envs", url, anon_key)
 console.log("creating db link")
 // export const supabase = createClient();
 export const supabase = createClient<Database>(url, anon_key)
-export const supabaseConferati = createClient<Database>(url, anon_key, conferatiOptions)
+export const supabaseConferati = createClient<Database['conferati']>(url, anon_key)

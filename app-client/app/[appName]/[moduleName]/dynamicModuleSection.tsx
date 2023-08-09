@@ -23,11 +23,12 @@ interface ModuleProp {
 
 const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
   console.log('moduleData', JSON.stringify(moduleData, null, 7));
-
+  let columns: any[] = [];
+  let rows: any[] = [];
   // finds uniques and sort by:  the main records name
-
+if (moduleData.section_row_data) {
   let module_data_unique: any[] = [];
-  moduleData.section_row_data.forEach((record: any) => {
+  moduleData.section_row_data?.forEach((record: any) => {
     console.log("record:", record)
     if (
       module_data_unique.find(
@@ -52,7 +53,7 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
 
   console.log("module row data", module_data_sorted_by_main_record)
   // creates the rows array for the UI
-  const rows = module_data_sorted_by_main_record.map((row, index) => {
+  rows = module_data_sorted_by_main_record.map((row, index) => {
     const transformedRow: any[] = [];
     moduleData.section_column_data.forEach((labelData: any) => {
       Object.entries(row).map((entry) => {
@@ -65,7 +66,7 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
   });
 
   //creates the column labels, and links for the UI
-  let columns: any[] = [];
+
 
   moduleData.section_column_data.forEach((labelData: any) => {
     Object.keys(moduleData.section_row_data[0]).forEach((columnName, index) => {
@@ -85,7 +86,7 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
   // console.log('columns labels', moduleData.section_column_data);
   console.log('MODULE SECTION columns', columns);
   console.log('MODULE SECTION rows', rows);
-
+}
   return (
     <>
       <Card>
@@ -97,14 +98,14 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
               </TableCaption>
               <Thead>
                 <Tr>
-                  {columns.map((column) => {
+                  {columns?.map((column) => {
                     // return <Th key={key}>{key === 'type' ? moduleData.title + ' ': ''}{key}</Th>;
                     return <Th key={column.label_name}>{column.label_name}</Th>;
                   })}
                 </Tr>
               </Thead>
               <Tbody>
-                {rows.map((row: any, rowsindex) => {
+                {rows?.map((row: any, rowsindex) => {
                   return (
                     <Tr key={rowsindex}>
                       {row.map((value: any, index: number) => {
