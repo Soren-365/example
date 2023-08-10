@@ -42,6 +42,7 @@ CREATE table IF NOT EXISTS "conferati"."person" (
     "last_name" text not null,
     "birthdate" date,
     "wikipedia_page" text,
+    "local_image_url" text,
     "created_at" timestamp without time zone not null default now()
 );
 

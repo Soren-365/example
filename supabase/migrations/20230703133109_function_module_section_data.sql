@@ -1,4 +1,6 @@
 
+set check_function_bodies = off;
+
 
 CREATE OR REPLACE FUNCTION public.get_module_section_data_with_app_filter(url_module text, url_app text)
  RETURNS TABLE(data jsonb)
@@ -37,7 +39,7 @@ EXECUTE format(this_data.get_section_data_sql ,
 
 
 
-SELECT json_agg(combined) as combined INTO jsonb_column_data FROM (SELECT record_type_column_labels_id as column_id, c.name as  record_name, column_name, label_name, column_position, ui_links_to_record FROM module_section_columns_shown a 
+SELECT json_agg(combined) as combined INTO jsonb_column_data FROM (SELECT record_type_column_labels_id as column_id, c.name as  record_name, column_name, label_name, column_position, ui_links_to_record, is_external_link FROM module_section_columns_shown a 
 JOIN record_type_column_labels b ON a.record_type_column_labels_id = b.id JOIN record_type c ON b.record_type_id = c.id WHERE module_section_id = this_data.id) as combined;
 			   
 jsonb_data := json_build_object ('section_id', this_data.id, 'section_column_data', jsonb_column_data, 'section_row_data', jsonb_row_data::jsonb, 'main_record_name', this_data.record_table)::jsonb;		

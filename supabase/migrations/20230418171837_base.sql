@@ -2,6 +2,8 @@
 
 
 create schema if not exists "public";
+DROP TABLE IF EXISTS "public"."page_module";
+DROP TABLE IF EXISTS "public"."page_record";
 DROP TABLE IF EXISTS "public"."app";
 DROP TABLE IF EXISTS "public"."record_type";
 DROP TABLE IF EXISTS "public"."record_type_column_labels";
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS "public"."record_type_column_labels" (
 
 --//-- 
 
-DROP TABLE IF EXISTS "public"."page_module";
+
 DROP TABLE IF EXISTS "public"."module_section_columns_shown";
 DROP TABLE IF EXISTS "public"."module_section";
 DROP TABLE IF EXISTS "public"."module_section_data";
@@ -86,7 +88,6 @@ CREATE table IF NOT EXISTS "public"."module_section" (
 
 
 
-DROP TABLE IF EXISTS "public"."page_record";
 
 CREATE table IF NOT EXISTS "public"."page_record" (
     "id" bigint generated always as identity UNIQUE not null,
