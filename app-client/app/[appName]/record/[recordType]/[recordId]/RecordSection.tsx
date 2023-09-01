@@ -75,7 +75,7 @@ const RecordSection = ({
 
  const richtext_purified = function() {
     return (
-        <span className="content" style={{ display: "inline-block"}} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(sectionData.section_richtext)}}></span>
+        <div className="content" style={{ display: "inline-block"}} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(sectionData.section_richtext)}}></div>
     );
   }
 
@@ -92,10 +92,11 @@ const RecordSection = ({
 
             {/* variant="boldVariant" */}
               <Box padding="4"   bg="blackAlpha.100" color="black" >
-                <Text>
+              
                   The {recordType} {richtext_purified()}
                   
-                               </Text>
+                              
+                              
               </Box>
           
         

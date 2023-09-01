@@ -52,28 +52,9 @@ export default function Nav() {
                 </Link>
 
 
-                <Link
-                  href="/"
-                  className={
-                    pathname === '/'
-                      ? 'border-indigo-500 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2'
-                      : 'border-transparent hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 '
-                  }
-                >
-                  Home
-                </Link>
+               
 
-                <Link
-                  href="/notes"
-                  className={
-                    pathname === '/notes'
-                      ? 'border-indigo-500 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2'
-                      : 'border-transparent hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 '
-                  }
-                  aria-current="page"
-                >
-                  Notes
-                </Link>
+               
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
