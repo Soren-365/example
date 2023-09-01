@@ -21,7 +21,7 @@ const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
 
   const { data, error } = await supabase
     .from('app')
-    .select(`url_name, id`)
+    .select(`url_name, id, logo_url`)
     .eq('url_name', appName);
   if (error) {
     console.log('Error', error);  
@@ -60,13 +60,13 @@ console.log("appName", appName)
   
   const appData = getAppData(appName);
   const moduleData = getPageModuleData(appName);
-  //   console.log('appData', appData, typeof appData);
+    // console.log('appData', appData, typeof appData);
 
   // Wait for the promises to resolve
   const [app, modules]: [AppData, PageModuleData ] = await Promise.all([appData, moduleData]);
 
-  console.log('app', app, typeof app);
-  console.log('modules', modules, typeof modules);
+  // console.log('app', app, typeof app);
+  // console.log('modules', modules, typeof modules);
 
   return (
     <>
@@ -104,6 +104,8 @@ console.log("appName", appName)
                                       height={20}
                                       width={20}
                                     />
+
+
                                   </div>
                                   <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                     <div>{module.title}</div>

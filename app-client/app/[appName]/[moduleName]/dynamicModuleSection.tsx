@@ -1,6 +1,7 @@
 'use client';
 import { ModuleData, ModuleSectionData } from './page';
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
+import DOMPurify from 'isomorphic-dompurify';
 import {
   Table,
   Thead,
@@ -11,6 +12,9 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Box,
+  Text,
+  Divider
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/react';
 
@@ -87,10 +91,25 @@ if (moduleData.section_row_data) {
   console.log('MODULE SECTION columns', columns);
   console.log('MODULE SECTION rows', rows);
 }
+
+const richtext_purified = function() {
+  return (
+      <span className="content" style={{ display: "inline-block"}} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(moduleData.section_richtext)}}></span>
+  );
+}
+
+
   return (
     <>
       <Card>
         <CardBody>
+        <Box padding="4"   bg="blackAlpha.100" color="black" >
+                <Text>
+                  {richtext_purified()} {moduleData.main_record_name}
+                  
+                               </Text>
+              </Box>
+              <Divider margin="4"/>
           <TableContainer>
             <Table variant="simple">
               <TableCaption>
