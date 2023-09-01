@@ -44,7 +44,9 @@ EXECUTE format(this_data.get_section_data_sql,
 SELECT json_agg(combined) as combined INTO jsonb_column_data FROM (SELECT record_type_column_labels_id as column_id, c.name as  record_name, column_name, label_name, column_position, ui_links_to_record, is_external_link FROM record_section_columns_shown a 
 JOIN record_type_column_labels b ON a.record_type_column_labels_id = b.id JOIN record_type c ON b.record_type_id = c.id WHERE record_section_id = this_data.id) as combined;
 			   
-jsonb_section_data := json_build_object ('section_id', this_data.id, 'section_column_data', jsonb_column_data, 'section_row_data', jsonb_row_data::jsonb, 'vertical_page_position', to_json(this_data.vertical_page_position), 'section_title', this_data.title)::jsonb;	
+jsonb_section_data := json_build_object ('section_id', this_data.id, 'section_column_data', jsonb_column_data, 
+'section_row_data', jsonb_row_data::jsonb, 'vertical_page_position', to_json(this_data.vertical_page_position), 
+'section_title', this_data.title,'section_richtext', this_data.richtext)::jsonb;	
  
  
  if EXISTS (SELECT jsonb_sections_data->0) THEN
@@ -56,9 +58,12 @@ END IF;
 END LOOP;
 
 EXECUTE format('SELECT to_json(combined) FROM (SELECT * FROM conferati.%I WHERE id = $1) as combined', record_type) USING record_id INTO jsonb_record_data; 
-			   
-SELECT json_agg(combined) as combined INTO jsonb_record_label_data FROM (SELECT b.id as column_id,  column_name, c.name as record_name, label_name, is_external_link FROM record_type_column_labels b
-JOIN record_type c ON b.record_type_id = c.id WHERE c.name = $2) as combined;
+
+SELECT json_agg(combined) as combined INTO jsonb_record_label_data FROM (SELECT record_type_column_labels_id as column_id, c.name as  record_name, column_name, label_name, column_position, ui_links_to_record, is_external_link FROM record_page_columns_shown a 
+JOIN record_type_column_labels b ON a.record_type_column_labels_id = b.id JOIN record_type c ON b.record_type_id = c.id WHERE page_record_id =  (SELECT id FROM page_record WHERE app = $3 AND page_record.record_name = $2)) as combined;
+
+-- SELECT json_agg(combined) as combined INTO jsonb_record_label_data FROM (SELECT b.id as column_id,  column_name, c.name as record_name, label_name, is_external_link FROM record_type_column_labels b
+-- JOIN record_type c ON b.record_type_id = c.id WHERE c.name = $2) as combined;
 
 data := json_build_object ('record_sections_data', jsonb_sections_data, 'record_label_data', jsonb_record_label_data, 'record_data', jsonb_record_data );
 RETURN QUERY SELECT data;

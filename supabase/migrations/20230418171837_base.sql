@@ -101,7 +101,7 @@ CREATE table IF NOT EXISTS "public"."page_record" (
      )
 );
 
-
+DROP TABLE IF EXISTS "public"."record_page_columns_shown";
 DROP TABLE IF EXISTS "public"."record_section_columns_shown";
 DROP TABLE IF EXISTS "public"."record_section_data";
 DROP TABLE IF EXISTS "public"."record_section";
@@ -117,6 +117,19 @@ CREATE TABLE IF NOT EXISTS "public"."record_section_columns_shown" (
      )
 );
 
+
+CREATE TABLE IF NOT EXISTS "public"."record_page_columns_shown" (
+    "id" bigint generated always as identity NOT NULL,
+    "page_record_id" bigint,
+    "record_type_column_labels_id" bigint,
+    "column_position" integer,
+    "ui_links_to_record" boolean  NOT NULL DEFAULT false,
+    CONSTRAINT "pk_record_page_columns_shown" PRIMARY KEY (
+        "page_record_id","record_type_column_labels_id"
+     )
+);
+
+
 CREATE table IF NOT EXISTS "public"."record_section_data" (
     "id" bigint PRIMARY KEY generated always as identity,
     "get_section_data_sql" text not null,
@@ -126,6 +139,7 @@ CREATE table IF NOT EXISTS "public"."record_section_data" (
 CREATE table IF NOT EXISTS "public"."record_section" (
     "id" bigint PRIMARY KEY generated always as identity,
     "title" text   NULL,
+    "richtext" text NULL,
     "page_record" bigint NOT NULL REFERENCES page_record(id),
     "joining_table" text REFERENCES record_type(name),
     "second_parent_table" text REFERENCES record_type(name),
