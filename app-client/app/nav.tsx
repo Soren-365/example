@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
+import Image from 'next/image'
 
 export default function Nav() {
   const pathname = usePathname();
@@ -15,12 +15,12 @@ export default function Nav() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex items-center flex-shrink-0">
-                <img
+                <Image
                   className="block w-auto h-8 lg:hidden"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt="Your Company"
                 />
-                <img
+                <Image
                   className="hidden w-auto h-8 lg:block"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt="Your Company"
@@ -90,7 +90,7 @@ export default function Nav() {
                     aria-haspopup="true"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <img
+                    <Image
                       className="w-8 h-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
@@ -229,7 +229,7 @@ export default function Nav() {
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-4">
               <div className="flex-shrink-0">
-                <img
+                <Image
                   className="w-10 h-10 rounded-full"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""
