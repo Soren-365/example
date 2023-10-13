@@ -59,7 +59,7 @@ if (moduleData.section_row_data) {
   // creates the rows array for the UI
   rows = module_data_sorted_by_main_record.map((row, index) => {
     const transformedRow: any[] = [];
-    moduleData.section_column_data.forEach((labelData: any) => {
+    moduleData.section_column_data?.forEach((labelData: any) => {
       Object.entries(row).map((entry) => {
         if (labelData.column_name === entry[0]) {
           transformedRow[labelData.column_position] = entry[1];
@@ -72,7 +72,7 @@ if (moduleData.section_row_data) {
   //creates the column labels, and links for the UI
 
 
-  moduleData.section_column_data.forEach((labelData: any) => {
+  moduleData.section_column_data?.forEach((labelData: any) => {
     Object.keys(moduleData.section_row_data[0]).forEach((columnName, index) => {
       if (labelData.column_name === columnName) {
         let newLabelData = labelData;

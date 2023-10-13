@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image'
+import { Img } from '@chakra-ui/react'
 
 export default function Nav() {
   const pathname = usePathname();
@@ -15,16 +15,12 @@ export default function Nav() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex items-center flex-shrink-0">
-                <Image
-                  className="block w-auto h-8 lg:hidden"
+                <Img
+                className="block w-auto h-8 "
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt="Your Company"
                 />
-                <Image
-                  className="hidden w-auto h-8 lg:block"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt="Your Company"
-                />
+      
               </div>
 
               <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -51,7 +47,16 @@ export default function Nav() {
                   Corporate
                 </Link>
 
-
+                <Link
+                  href="/Events"
+                  className={
+                    pathname === '/Events'
+                      ? 'border-indigo-500 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2'
+                      : 'border-transparent hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 border-b-2 '
+                  }
+                >
+                  Events
+                </Link>
                
 
                
@@ -90,7 +95,7 @@ export default function Nav() {
                     aria-haspopup="true"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <Image
+                    <Img
                       className="w-8 h-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
@@ -205,31 +210,12 @@ export default function Nav() {
               Home
             </Link>
 
-            <Link
-              href="/notes"
-              className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-            >
-              Notes
-            </Link>
 
-            <Link
-              href="/"
-              className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-            >
-              Projects
-            </Link>
-
-            <Link
-              href="/"
-              className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
-            >
-              Calendar
-            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
             <div className="flex items-center px-4">
               <div className="flex-shrink-0">
-                <Image
+                <Img
                   className="w-10 h-10 rounded-full"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""

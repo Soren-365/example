@@ -56,8 +56,8 @@ export default async function Page({
   //   })
   // }
 
-  // console.log('module data 0', moduleData[0]);
-  // console.log('module data 1',moduleData[1]);
+  console.log('module data 0', moduleData[0]);
+  console.log('module data 1',moduleData[1]);
   return (
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">

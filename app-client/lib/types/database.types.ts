@@ -292,21 +292,21 @@ export interface Database {
           column_position: number
           id: number
           module_section_id: number
-          record_type_column_labels_id: number
+          record_table_column_labels_id: number
           ui_links_to_record: boolean
         }
         Insert: {
           column_position: number
           id?: never
           module_section_id: number
-          record_type_column_labels_id: number
+          record_table_column_labels_id: number
           ui_links_to_record?: boolean
         }
         Update: {
           column_position?: number
           id?: never
           module_section_id?: number
-          record_type_column_labels_id?: number
+          record_table_column_labels_id?: number
           ui_links_to_record?: boolean
         }
       }
@@ -413,21 +413,21 @@ export interface Database {
           column_position: number | null
           id: number
           record_section_id: number
-          record_type_column_labels_id: number
+          record_table_column_labels_id: number
           ui_links_to_record: boolean
         }
         Insert: {
           column_position?: number | null
           id?: never
           record_section_id: number
-          record_type_column_labels_id: number
+          record_table_column_labels_id: number
           ui_links_to_record?: boolean
         }
         Update: {
           column_position?: number | null
           id?: never
           record_section_id?: number
-          record_type_column_labels_id?: number
+          record_table_column_labels_id?: number
           ui_links_to_record?: boolean
         }
       }
@@ -448,7 +448,7 @@ export interface Database {
           id?: never
         }
       }
-      record_type: {
+      record_table: {
         Row: {
           created_at: string
           data_jsonschema: string | null
@@ -468,27 +468,27 @@ export interface Database {
           name?: string
         }
       }
-      record_type_column_labels: {
+      record_table_column_labels: {
         Row: {
           column_name: string
           id: number
           is_external_link: boolean
           label_name: string
-          record_type_id: number
+          record_table_id: number
         }
         Insert: {
           column_name: string
           id?: never
           is_external_link?: boolean
           label_name: string
-          record_type_id: number
+          record_table_id: number
         }
         Update: {
           column_name?: string
           id?: never
           is_external_link?: boolean
           label_name?: string
-          record_type_id?: number
+          record_table_id?: number
         }
       }
     }
@@ -508,7 +508,7 @@ export interface Database {
       get_record_section_data_with_section_filter: {
         Args: {
           record_id: number
-          record_type: string
+          record_table: string
           app_name: string
         }
         Returns: {

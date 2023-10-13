@@ -25,7 +25,7 @@ export type RecordData = {
 //   console.log('sending data', recordId, recordType, appName);
 //   // let { data, status, error } = await supabase.rpc('get_record_section_data', {
 //   //   record_id: parseInt(recordId),
-//   //   record_type: recordType,
+//   //   record_table: recordType,
 //   //   url_app: appName,
 //   // });
 
@@ -57,7 +57,7 @@ const getPageRecordData = async (
   console.log('sending data', recordId, recordType, appName);
   // let { data, status, error } = await supabase.rpc('get_record_section_data', {
   //   record_id: parseInt(recordId),
-  //   record_type: recordType,
+  //   record_table: recordType,
   //   url_app: appName,
   // });
 
@@ -67,7 +67,7 @@ const getPageRecordData = async (
     'get_record_section_data_with_section_filter',
     {
       record_id: parseInt(recordId),
-      record_type: recordType,
+      record_table: recordType,
       app_name: appName
     },
   );
