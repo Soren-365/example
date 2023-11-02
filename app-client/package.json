@@ -5,7 +5,7 @@
     "dev-no-turbo": "cross-env DB_LOCATION=prod_db next dev",
     "dev-remote": "cross-env DB_LOCATION=prod_db next dev",
     "build": "cross-env DB_LOCATION=prod_db next build",
-    "start": "next start",
+    "start": "cross-env DB_LOCATION=prod_db next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "db-local-types": "supabase gen types typescript --local > lib/types/database.types.ts ",
