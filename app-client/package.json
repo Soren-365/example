@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env DB_LOCATION=local_db next dev --turbo",
-    "dev-no-turbo": "cross-env DB_LOCATION=local_db next dev",
-    "dev-remote": "cross-env DB_LOCATION=prod_db next dev --turbo",
+    "dev-no-turbo": "cross-env DB_LOCATION=prod_db next dev",
+    "dev-remote": "cross-env DB_LOCATION=prod_db next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
