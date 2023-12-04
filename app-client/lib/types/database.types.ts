@@ -3,38 +3,12 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
   conferati: {
     Tables: {
-      app_whitefilter_st: {
-        Row: {
-          app_id: number
-          column_address: string
-          created_at: string | null
-          filter: string
-          id: number
-          table_address: string
-        }
-        Insert: {
-          app_id: number
-          column_address?: string
-          created_at?: string | null
-          filter: string
-          id?: number
-          table_address: string
-        }
-        Update: {
-          app_id?: number
-          column_address?: string
-          created_at?: string | null
-          filter?: string
-          id?: number
-          table_address?: string
-        }
-      }
       filtertypes_st: {
         Row: {
           created_at: string | null
@@ -51,6 +25,7 @@ export interface Database {
           id?: number
           type?: string
         }
+        Relationships: []
       }
       organization: {
         Row: {
@@ -61,16 +36,24 @@ export interface Database {
         }
         Insert: {
           created_at?: string
-          id?: never
+          id?: number
           name: string
           type: string
         }
         Update: {
           created_at?: string
-          id?: never
+          id?: number
           name?: string
           type?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "organization_type_fkey"
+            columns: ["type"]
+            referencedRelation: "filtertypes_st"
+            referencedColumns: ["type"]
+          }
+        ]
       }
       organization_role: {
         Row: {
@@ -85,7 +68,7 @@ export interface Database {
         Insert: {
           created_at?: string
           end_date?: string | null
-          id?: never
+          id?: number
           organization: number
           person: number
           start_date?: string | null
@@ -94,12 +77,13 @@ export interface Database {
         Update: {
           created_at?: string
           end_date?: string | null
-          id?: never
+          id?: number
           organization?: number
           person?: number
           start_date?: string | null
           title?: string
         }
+        Relationships: []
       }
       person: {
         Row: {
@@ -115,7 +99,7 @@ export interface Database {
           birthdate?: string | null
           created_at?: string
           first_name: string
-          id?: never
+          id?: number
           last_name: string
           local_image_url?: string | null
           wikipedia_page?: string | null
@@ -124,63 +108,12 @@ export interface Database {
           birthdate?: string | null
           created_at?: string
           first_name?: string
-          id?: never
+          id?: number
           last_name?: string
           local_image_url?: string | null
           wikipedia_page?: string | null
         }
-      }
-      record_section_blackfilter_st: {
-        Row: {
-          column_address: string
-          created_at: string | null
-          filter: string
-          id: number
-          record_section_id: number
-          table_address: string
-        }
-        Insert: {
-          column_address?: string
-          created_at?: string | null
-          filter: string
-          id?: number
-          record_section_id: number
-          table_address: string
-        }
-        Update: {
-          column_address?: string
-          created_at?: string | null
-          filter?: string
-          id?: number
-          record_section_id?: number
-          table_address?: string
-        }
-      }
-      record_section_whitefilter_st: {
-        Row: {
-          column_address: string
-          created_at: string | null
-          filter: string
-          id: number
-          record_section_id: number
-          table_address: string
-        }
-        Insert: {
-          column_address?: string
-          created_at?: string | null
-          filter: string
-          id?: number
-          record_section_id: number
-          table_address: string
-        }
-        Update: {
-          column_address?: string
-          created_at?: string | null
-          filter?: string
-          id?: number
-          record_section_id?: number
-          table_address?: string
-        }
+        Relationships: []
       }
     }
     Views: {
@@ -227,6 +160,7 @@ export interface Database {
         Row: {
           admin: string | null
           created_at: string
+          home_module_url_name: string | null
           id: number
           logo_url: string
           url_name: string
@@ -234,17 +168,20 @@ export interface Database {
         Insert: {
           admin?: string | null
           created_at?: string
-          id?: never
+          home_module_url_name?: string | null
+          id?: number
           logo_url: string
           url_name: string
         }
         Update: {
           admin?: string | null
           created_at?: string
-          id?: never
+          home_module_url_name?: string | null
+          id?: number
           logo_url?: string
           url_name?: string
         }
+        Relationships: []
       }
       module_section: {
         Row: {
@@ -263,7 +200,7 @@ export interface Database {
         Insert: {
           app_filter_on_table?: string | null
           created_at?: string
-          id?: never
+          id?: number
           joining_table?: string | null
           module_section_data: number
           page_module: number
@@ -276,7 +213,7 @@ export interface Database {
         Update: {
           app_filter_on_table?: string | null
           created_at?: string
-          id?: never
+          id?: number
           joining_table?: string | null
           module_section_data?: number
           page_module?: number
@@ -286,29 +223,44 @@ export interface Database {
           title?: string
           vertical_page_position?: number | null
         }
-      }
-      module_section_columns_shown: {
-        Row: {
-          column_position: number
-          id: number
-          module_section_id: number
-          record_table_column_labels_id: number
-          ui_links_to_record: boolean
-        }
-        Insert: {
-          column_position: number
-          id?: never
-          module_section_id: number
-          record_table_column_labels_id: number
-          ui_links_to_record?: boolean
-        }
-        Update: {
-          column_position?: number
-          id?: never
-          module_section_id?: number
-          record_table_column_labels_id?: number
-          ui_links_to_record?: boolean
-        }
+        Relationships: [
+          {
+            foreignKeyName: "module_section_app_filter_on_table_fkey"
+            columns: ["app_filter_on_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          },
+          {
+            foreignKeyName: "module_section_joining_table_fkey"
+            columns: ["joining_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          },
+          {
+            foreignKeyName: "module_section_module_section_data_fkey"
+            columns: ["module_section_data"]
+            referencedRelation: "module_section_data"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "module_section_page_module_fkey"
+            columns: ["page_module"]
+            referencedRelation: "page_module"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "module_section_record_table_fkey"
+            columns: ["record_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          },
+          {
+            foreignKeyName: "module_section_second_parent_table_fkey"
+            columns: ["second_parent_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
       }
       module_section_data: {
         Row: {
@@ -319,13 +271,14 @@ export interface Database {
         Insert: {
           description?: string | null
           get_section_data_sql: string
-          id?: never
+          id?: number
         }
         Update: {
           description?: string | null
           get_section_data_sql?: string
-          id?: never
+          id?: number
         }
+        Relationships: []
       }
       page_module: {
         Row: {
@@ -338,17 +291,18 @@ export interface Database {
         Insert: {
           app: string
           created_at?: string
-          id?: never
+          id?: number
           title?: string | null
           url_name: string
         }
         Update: {
           app?: string
           created_at?: string
-          id?: never
+          id?: number
           title?: string | null
           url_name?: string
         }
+        Relationships: []
       }
       page_record: {
         Row: {
@@ -363,7 +317,7 @@ export interface Database {
           app: string
           created_at?: string
           description?: string | null
-          id?: never
+          id?: number
           record_name: string
           title: string
         }
@@ -371,10 +325,24 @@ export interface Database {
           app?: string
           created_at?: string
           description?: string | null
-          id?: never
+          id?: number
           record_name?: string
           title?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "page_record_app_fkey"
+            columns: ["app"]
+            referencedRelation: "app"
+            referencedColumns: ["url_name"]
+          },
+          {
+            foreignKeyName: "page_record_record_name_fkey"
+            columns: ["record_name"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
       }
       record_section: {
         Row: {
@@ -383,53 +351,59 @@ export interface Database {
           joining_table: string | null
           page_record: number
           record_section_data: number
+          richtext: string | null
           second_parent_table: string | null
           title: string | null
           vertical_page_position: number | null
         }
         Insert: {
           createdAt?: string
-          id?: never
+          id?: number
           joining_table?: string | null
           page_record: number
           record_section_data: number
+          richtext?: string | null
           second_parent_table?: string | null
           title?: string | null
           vertical_page_position?: number | null
         }
         Update: {
           createdAt?: string
-          id?: never
+          id?: number
           joining_table?: string | null
           page_record?: number
           record_section_data?: number
+          richtext?: string | null
           second_parent_table?: string | null
           title?: string | null
           vertical_page_position?: number | null
         }
-      }
-      record_section_columns_shown: {
-        Row: {
-          column_position: number | null
-          id: number
-          record_section_id: number
-          record_table_column_labels_id: number
-          ui_links_to_record: boolean
-        }
-        Insert: {
-          column_position?: number | null
-          id?: never
-          record_section_id: number
-          record_table_column_labels_id: number
-          ui_links_to_record?: boolean
-        }
-        Update: {
-          column_position?: number | null
-          id?: never
-          record_section_id?: number
-          record_table_column_labels_id?: number
-          ui_links_to_record?: boolean
-        }
+        Relationships: [
+          {
+            foreignKeyName: "record_section_joining_table_fkey"
+            columns: ["joining_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          },
+          {
+            foreignKeyName: "record_section_page_record_fkey"
+            columns: ["page_record"]
+            referencedRelation: "page_record"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_section_record_section_data_fkey"
+            columns: ["record_section_data"]
+            referencedRelation: "record_section_data"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_section_second_parent_table_fkey"
+            columns: ["second_parent_table"]
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
       }
       record_section_data: {
         Row: {
@@ -440,13 +414,14 @@ export interface Database {
         Insert: {
           description: string
           get_section_data_sql: string
-          id?: never
+          id?: number
         }
         Update: {
           description?: string
           get_section_data_sql?: string
-          id?: never
+          id?: number
         }
+        Relationships: []
       }
       record_table: {
         Row: {
@@ -458,15 +433,16 @@ export interface Database {
         Insert: {
           created_at?: string
           data_jsonschema?: string | null
-          id?: never
+          id?: number
           name: string
         }
         Update: {
           created_at?: string
           data_jsonschema?: string | null
-          id?: never
+          id?: number
           name?: string
         }
+        Relationships: []
       }
       record_table_column_labels: {
         Row: {
@@ -478,18 +454,26 @@ export interface Database {
         }
         Insert: {
           column_name: string
-          id?: never
+          id?: number
           is_external_link?: boolean
           label_name: string
           record_table_id: number
         }
         Update: {
           column_name?: string
-          id?: never
+          id?: number
           is_external_link?: boolean
           label_name?: string
           record_table_id?: number
         }
+        Relationships: [
+          {
+            foreignKeyName: "record_table_column_labels_record_table_id_fkey"
+            columns: ["record_table_id"]
+            referencedRelation: "record_table"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
@@ -534,6 +518,7 @@ export interface Database {
           id: string
           name: string
           owner: string | null
+          owner_id: string | null
           public: boolean | null
           updated_at: string | null
         }
@@ -545,6 +530,7 @@ export interface Database {
           id: string
           name: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
@@ -556,9 +542,11 @@ export interface Database {
           id?: string
           name?: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
+        Relationships: []
       }
       migrations: {
         Row: {
@@ -579,6 +567,7 @@ export interface Database {
           id?: number
           name?: string
         }
+        Relationships: []
       }
       objects: {
         Row: {
@@ -589,8 +578,10 @@ export interface Database {
           metadata: Json | null
           name: string | null
           owner: string | null
+          owner_id: string | null
           path_tokens: string[] | null
           updated_at: string | null
+          version: string | null
         }
         Insert: {
           bucket_id?: string | null
@@ -600,8 +591,10 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          version?: string | null
         }
         Update: {
           bucket_id?: string | null
@@ -611,15 +604,34 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          version?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      can_insert_object: {
+        Args: {
+          bucketid: string
+          name: string
+          owner: string
+          metadata: Json
+        }
+        Returns: undefined
+      }
       extension: {
         Args: {
           name: string
@@ -636,7 +648,7 @@ export interface Database {
         Args: {
           name: string
         }
-        Returns: string[]
+        Returns: unknown
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
