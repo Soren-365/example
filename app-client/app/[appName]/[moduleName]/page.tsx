@@ -58,15 +58,17 @@ export default async function Page({
   //   })
   // }
 
-  console.log('module data 0', moduleData[0]);
-  console.log('module data 1',moduleData[1]);
+  console.log('module data 0', moduleData ? moduleData[0] : {});
+  console.log('module data 1',moduleData ? moduleData[1]: {});
   return (
+    
     <div className="py-4">
       <div className="text-lg text-blue-700 py-4">
         Module page: {moduleName}
       </div>
-      {moduleData.length > 0 && moduleData[0] !== '' ? (
+      {moduleData && moduleData.length > 0 && moduleData[0] !== '' ? (
         moduleData?.map((thisModuleData: any) => (
+       
           <div key={thisModuleData.section_id} className='py-10'>
             <DynamicModuleSection
               moduleData={thisModuleData}

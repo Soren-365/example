@@ -30,86 +30,85 @@ const ModuleSection = ({ moduleData, appName, moduleName }: any) => {
   let columns: any[] = [];
   let rows: any[] = [];
   // finds uniques and sort by:  the main records name
-if (moduleData.section_row_data) {
-  let module_data_unique: any[] = [];
-  moduleData.section_row_data?.forEach((record: any) => {
-    console.log("record:", record)
-    if (
-      module_data_unique.find(
-        (entry) =>
-          entry[moduleData.main_record_name] ===
-          record[moduleData.main_record_name],
-      ) === undefined
+  if (moduleData.section_row_data) {
+    let module_data_unique: any[] = [];
+    moduleData.section_row_data?.forEach((record: any) => {
+      console.log("record:", record)
+      if (
+        module_data_unique.find(
+          (entry) =>
+            entry[moduleData.main_record_name] ===
+            record[moduleData.main_record_name],
+        ) === undefined
+      ) {
+        module_data_unique.push(record);
+      }
+    });
+    console.log("module_data_unique:", module_data_unique)
+    const module_data_sorted_by_main_record = module_data_unique.sort(function (
+      a,
+      b,
     ) {
-      module_data_unique.push(record);
-    }
-  });
-  console.log("module_data_unique:", module_data_unique)
-  const module_data_sorted_by_main_record = module_data_unique.sort(function (
-    a,
-    b,
-  ) {
-    return (
-      parseInt(a[moduleData.main_record_name]) -
-      parseInt(b[moduleData.main_record_name])
-    );
-  });
+      return (
+        parseInt(a[moduleData.main_record_name]) -
+        parseInt(b[moduleData.main_record_name])
+      );
+    });
 
-  console.log("module row data", module_data_sorted_by_main_record)
-  // creates the rows array for the UI
-  rows = module_data_sorted_by_main_record.map((row, index) => {
-    const transformedRow: any[] = [];
+    console.log("module row data", module_data_sorted_by_main_record)
+    // creates the rows array for the UI
+    rows = module_data_sorted_by_main_record.map((row, index) => {
+      const transformedRow: any[] = [];
+      moduleData.section_column_data?.forEach((labelData: any) => {
+        Object.entries(row).map((entry) => {
+          if (labelData.column_name === entry[0]) {
+            transformedRow[labelData.column_position] = entry[1];
+          }
+        });
+      });
+      return transformedRow;
+    });
+
+    //creates the column labels, and links for the UI
+
+
     moduleData.section_column_data?.forEach((labelData: any) => {
-      Object.entries(row).map((entry) => {
-        if (labelData.column_name === entry[0]) {
-          transformedRow[labelData.column_position] = entry[1];
+      Object.keys(moduleData.section_row_data[0]).forEach((columnName, index) => {
+        if (labelData.column_name === columnName) {
+          let newLabelData = labelData;
+          if (labelData.ui_links_to_record === true) {
+            const linking_ids = module_data_sorted_by_main_record.map(
+              (row) => row[labelData.record_name],
+            );
+            newLabelData = Object.assign(newLabelData, { linking_ids });
+          }
+          columns[labelData.column_position - 1] = newLabelData;
         }
       });
     });
-    return transformedRow;
-  });
 
-  //creates the column labels, and links for the UI
+    // console.log('columns labels', moduleData.section_column_data);
+    console.log('MODULE SECTION columns', columns);
+    console.log('MODULE SECTION rows', rows);
+  }
 
-
-  moduleData.section_column_data?.forEach((labelData: any) => {
-    Object.keys(moduleData.section_row_data[0]).forEach((columnName, index) => {
-      if (labelData.column_name === columnName) {
-        let newLabelData = labelData;
-        if (labelData.ui_links_to_record === true) {
-          const linking_ids = module_data_sorted_by_main_record.map(
-            (row) => row[labelData.record_name],
-          );
-          newLabelData = Object.assign(newLabelData, {linking_ids });
-        }
-        columns[labelData.column_position - 1] = newLabelData;
-      }
-    });
-  });
-
-  // console.log('columns labels', moduleData.section_column_data);
-  console.log('MODULE SECTION columns', columns);
-  console.log('MODULE SECTION rows', rows);
-}
-
-const richtext_purified = function() {
-  return (
-      <span className="content" style={{ display: "inline-block"}} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(moduleData.section_richtext)}}></span>
-  );
-}
+  const richtext_purified = function () {
+    return (
+      <span className="content" style={{ display: "inline-block" }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(moduleData.section_richtext) }}></span>
+    );
+  }
 
 
   return (
     <>
       <Card>
         <CardBody>
-        <Box padding="4"   bg="blackAlpha.100" color="black" >
-                <Text>
-                  {richtext_purified()} {moduleData.main_record_name}
-                  
-                               </Text>
-              </Box>
-              <Divider margin="4"/>
+          <Box padding="4" bg="blackAlpha.100" color="black" >
+            <Text>
+              {richtext_purified()}
+            </Text>
+          </Box>
+          <Divider margin="4" />
           <TableContainer>
             <Table variant="simple">
               <TableCaption>
@@ -135,17 +134,15 @@ const richtext_purified = function() {
                               key={index}
                             >
                               <Link
-                                href={`/${appName}/record/${
-                                  columns[index - 1]?.record_name
-                                }/${
-                                  columns[index - 1]?.linking_ids[rowsindex] ||
+                                href={`/${appName}/record/${columns[index - 1]?.record_name
+                                  }/${columns[index - 1]?.linking_ids[rowsindex] ||
                                   moduleData.section_row_data[rowsindex][moduleData.main_record_name]
 
                                   //   moduleData.section_row_data[rowsindex - 1]
                                   //     [ columns[index - 1]
                                   //     ?.record_name]
                                   // || row.id
-                                }`}
+                                  }`}
                                 color="blue.400"
                                 _hover={{
                                   color: 'blue.800',
