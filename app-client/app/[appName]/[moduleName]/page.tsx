@@ -1,6 +1,7 @@
 import { supabase } from 'lib/utils/supabaseClient';
 import DynamicModuleSection from './dynamicModuleSection';
 import { Json } from '@/lib/types/database.types';
+import { unstable_noStore as noStore } from 'next/cache';
 
 interface ModulePageProps {
   params: { appName: string; moduleName: string };
@@ -47,7 +48,7 @@ export default async function Page({
   params: { moduleName, appName },
 }: ModulePageProps) {
   // console.log('module name', moduleName);
-
+ noStore()
   const moduleData = await getPageModuleData(moduleName, appName);
 
   // const moduleDataBySection: moduleSectionData[] = (moduleData) => {

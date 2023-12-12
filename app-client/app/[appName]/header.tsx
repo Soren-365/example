@@ -1,7 +1,7 @@
-'use client';
+
 import ModuleSelect from './moduleSelect';
 import Logo from './getLogo';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import {
   Card,
   CardHeader,
@@ -17,13 +17,13 @@ import {
 } from '@chakra-ui/react';
 
 const HeaderComponent = ({ moduleData, appData, appName }: any) => {
-  const router = useRouter()
-  if (appData) {
-    console.log('appData !!', appData);
-    if (appData.default_url_module_name !== null && appName) {
-      router.push(`/${appName}/${appData.default_url_module_name}`)
-    }
-  }
+  // const router = useRouter()
+  // if (appData) {
+  //   console.log('appData !!', appData);
+  //   if (appData.default_url_module_name !== null && appName) {
+  //     router.push(`/${appName}/${appData.default_url_module_name}`)
+  //   }
+  // }
 
   return (
     <>
@@ -37,8 +37,7 @@ const HeaderComponent = ({ moduleData, appData, appName }: any) => {
  >
   */}
 
-        {/* {appData[0].logo_url} */}
-        <Flex flexDirection="row" alignItems="center" gap="6">
+       <Flex flexDirection="row" alignItems="center" gap="6">
           <Logo appData={appData} />
           <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
 
@@ -50,33 +49,6 @@ const HeaderComponent = ({ moduleData, appData, appName }: any) => {
         </Flex>
       </Box>
     </>
-
-    //
-
-    //         <Box  w='100%' p={4} color='white'>
-    // {/* <div
-    // className=" flex justify-left flex-row gap-10 mx-auto max-w-xl px-4 sm:px-6 lg:px-8 "
-    // style={{
-    //   padding: '32px 0px 16px 36px',
-    //   borderBottom: 'solid 1px black',
-    // }}
-    // >
-    //  */}
-
-    // {/* {appData[0].logo_url} */}
-    // <Flex flexDirection='row'>
-
-    //    <Heading >
-    //   {appData? appData[0].url_name :  ' '}
-    // </Heading>
-
-    //   <Logo appData={appData} />
-
-    // <div className="px-4 mt-2">
-    // <ModuleSelect moduleData={moduleData} appName={appName} />
-    // </div>
-    // </Flex>
-    // </Box>
   );
 };
 

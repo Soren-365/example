@@ -14,5 +14,14 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  return res
+  if (req.nextUrl.pathname.startsWith('/_next')) {
+    return NextResponse.next()
+  }
+
+  // Override Next default's overaggressive caching behavior
+  // Make all internal requests must revalidate every 15 seconds
+  const url = req.nextUrl.clone()
+  url.searchParams.append('_nextCacheSkip', Math.floor(Date.now() / 1000 / 15).toString())
+
+  return NextResponse.rewrite(url)
 }

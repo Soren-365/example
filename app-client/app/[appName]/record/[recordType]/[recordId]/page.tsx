@@ -3,6 +3,7 @@ import RecordSection from './RecordSection';
 import './recordPage.css';
 import RecordData from './RecordData';
 // import {  Text } from '@chakra-ui/react';
+import { unstable_noStore as noStore } from 'next/cache';
 
 interface RecordPageProps {
   params: { appName: string; recordType: string; recordId: string };
@@ -90,6 +91,7 @@ const getPageRecordData = async (
 export default async function Page({
   params: { appName, recordId, recordType },
 }: RecordPageProps) {
+  noStore()
   const recordData = await getPageRecordData(recordId, appName, recordType);
 
   console.log('record data', recordData);
