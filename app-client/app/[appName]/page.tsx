@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import '../globals.css';
+
 import './styles.css'
 import { Key, Suspense } from 'react';
 import { supabase } from 'lib/utils/supabaseClient';

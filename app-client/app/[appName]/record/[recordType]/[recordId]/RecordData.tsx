@@ -10,17 +10,7 @@ import {
   textDecoration,
   Text,
 } from '@chakra-ui/react';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from '@chakra-ui/react';
+
 import { Link } from '@chakra-ui/next-js';
 interface RecordProp {
   recordData: NonNullable<RecordData>;
@@ -96,7 +86,7 @@ const RecordData = ({
         <CardBody>
           <Flex direction="row">
       
-            <div className='flex h-screen' style={{margin: "auto 0"}}>
+            <div className='flex ' style={{margin: "auto 0"}}>
             <List spacing={3} >
               {recordData &&
                 rowData?.map((entry, index) => {

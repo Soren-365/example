@@ -3,6 +3,7 @@
 import '../globals.css';
 import './styles.css';
 import { supabase } from 'lib/utils/supabaseClient';
+import Nav from './nav';
 
 import HeaderComponent from './header';
 
@@ -26,7 +27,7 @@ const getPageModuleData = async (
   return data;
 };
 
-const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
+export const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
 
   // console.log('appName', appName);
 
@@ -70,8 +71,8 @@ export default async function AppPageLayout({
 
   return (
     <>
-      <header className="bg-white shadow">
-        < HeaderComponent moduleData={moduleData} appData={appData} appName={params.appName} />
+      <header className="bg-white shadow w-full">
+       < HeaderComponent moduleData={moduleData} appData={appData} appName={params.appName} />
 
 
       </header>

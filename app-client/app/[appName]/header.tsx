@@ -2,6 +2,8 @@
 import ModuleSelect from './moduleSelect';
 import Logo from './getLogo';
 // import { useRouter } from 'next/navigation';
+import '../globals.css';
+import Nav from './nav';
 import {
   Card,
   CardHeader,
@@ -15,7 +17,8 @@ import {
   Divider,
   Heading,
 } from '@chakra-ui/react';
-
+import { cookies } from 'next/headers'
+import AuthButton from '../../components/AuthButton'
 const HeaderComponent = ({ moduleData, appData, appName }: any) => {
   // const router = useRouter()
   // if (appData) {
@@ -25,29 +28,34 @@ const HeaderComponent = ({ moduleData, appData, appName }: any) => {
   //   }
   // }
 
+  const cookieStore = cookies()
+
+  console.log("appData in header:", appData)
   return (
     <>
-      <Box w="100%" p={10}>
-        {/* <div
- className=" flex justify-left flex-row gap-10 mx-auto max-w-xl px-4 sm:px-6 lg:px-8 "
- style={{
-   padding: '32px 0px 16px 36px',
-   borderBottom: 'solid 1px black',
- }}
- >
-  */}
 
-       <Flex flexDirection="row" alignItems="center" gap="6">
-          <Logo appData={appData} />
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
 
-          </h1>
-          <Heading mt="10px"> {appData ? appData.url_name : ' '}</Heading>
+      <div className="flex flex-row p-2 justify-between bg-white border-b border-gray-200">
+
+
+        <div style={{ width: '480px' }} className="flex flex-row justify-between">
+          <div className=" flex flex-col items-center ">
+            <Logo appName={appName} />
+          </div>
+
+          <div className="flex items-center ">
+            <Heading className="" size="lg"> {appData ? appData.url_name : ' '}</Heading>
+          </div>
+
           <div className="px-4 mt-2">
             <ModuleSelect moduleData={moduleData} appName={appData.url_name} />
           </div>
-        </Flex>
-      </Box>
+        </div>
+        <div className="flex flex-row">
+          <Nav />
+        </div>
+        <AuthButton />
+      </div>
     </>
   );
 };
