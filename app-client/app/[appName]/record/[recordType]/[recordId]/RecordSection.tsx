@@ -1,6 +1,6 @@
 'use client';
 
-import { RecordData, RecordSectionData } from './page';
+import type { RecordDataType, RecordSectionDataType } from './page';
 import './recordPage.css';
 import DOMPurify from 'isomorphic-dompurify';
 import {
@@ -28,7 +28,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from '@chakra-ui/next-js';
 interface RecordProp {
-  recordData: NonNullable<RecordSectionData>;
+  recordData: NonNullable<RecordSectionDataType>;
 }
 
 const RecordSection = ({

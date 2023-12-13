@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-import type {Database} from 'lib/types/database.types'
+import type {Database} from '@/lib/types/database.types'
 
 
 let url 

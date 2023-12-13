@@ -9,12 +9,12 @@ interface RecordPageProps {
   params: { appName: string; recordType: string; recordId: string };
 }
 
-export type RecordSectionData = {
+export type RecordSectionDataType = {
   sectionId: number;
   section_data: object[];
 };
 
-export type RecordData = {
+export type RecordDataType = {
   record_data: object[];
 };
 

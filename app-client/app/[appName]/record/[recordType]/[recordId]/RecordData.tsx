@@ -1,7 +1,7 @@
 'use client';
 
 import './recordPage.css';
-import { RecordData } from './page';
+import { RecordDataType } from './page';
 import {
   Card,
   CardHeader,
@@ -13,7 +13,7 @@ import {
 
 import { Link } from '@chakra-ui/next-js';
 interface RecordProp {
-  recordData: NonNullable<RecordData>;
+  recordData: NonNullable<RecordDataType>;
 }
 import { MdCheckCircle } from 'react-icons/md';
 import {

@@ -7,6 +7,459 @@ export type Json =
   | Json[]
 
 export interface Database {
+  conferati: {
+    Tables: {
+      event: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: []
+      }
+      event_role: {
+        Row: {
+          created_at: string
+          event: number | null
+          id: number
+          person: number | null
+          role: string | null
+        }
+        Insert: {
+          created_at?: string
+          event?: number | null
+          id?: number
+          person?: number | null
+          role?: string | null
+        }
+        Update: {
+          created_at?: string
+          event?: number | null
+          id?: number
+          person?: number | null
+          role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_role_event_fkey"
+            columns: ["event"]
+            isOneToOne: false
+            referencedRelation: "event"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      filtertypes_st: {
+        Row: {
+          created_at: string | null
+          id: number
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          type?: string
+        }
+        Relationships: []
+      }
+      organization: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_type_fkey"
+            columns: ["type"]
+            isOneToOne: false
+            referencedRelation: "filtertypes_st"
+            referencedColumns: ["type"]
+          }
+        ]
+      }
+      organization_role: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: number
+          organization: number
+          person: number
+          start_date: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: number
+          organization: number
+          person: number
+          start_date?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: number
+          organization?: number
+          person?: number
+          start_date?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      person: {
+        Row: {
+          birthdate: string | null
+          created_at: string
+          first_name: string
+          id: number
+          last_name: string
+          local_image_url: string | null
+          wikipedia_page: string | null
+        }
+        Insert: {
+          birthdate?: string | null
+          created_at?: string
+          first_name: string
+          id?: number
+          last_name: string
+          local_image_url?: string | null
+          wikipedia_page?: string | null
+        }
+        Update: {
+          birthdate?: string | null
+          created_at?: string
+          first_name?: string
+          id?: number
+          last_name?: string
+          local_image_url?: string | null
+          wikipedia_page?: string | null
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  filters: {
+    Tables: {
+      app_whitefilter_st: {
+        Row: {
+          app_id: number
+          column_address: string
+          created_at: string | null
+          filter_type: string
+          id: number
+          table_address: string
+        }
+        Insert: {
+          app_id: number
+          column_address?: string
+          created_at?: string | null
+          filter_type: string
+          id?: number
+          table_address: string
+        }
+        Update: {
+          app_id?: number
+          column_address?: string
+          created_at?: string | null
+          filter_type?: string
+          id?: number
+          table_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_whitefilter_st_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "app"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "app_whitefilter_st_filter_type_fkey"
+            columns: ["filter_type"]
+            isOneToOne: false
+            referencedRelation: "filtertypes_st"
+            referencedColumns: ["type"]
+          },
+          {
+            foreignKeyName: "app_whitefilter_st_table_address_fkey"
+            columns: ["table_address"]
+            isOneToOne: false
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
+      }
+      module_section_columns_shown: {
+        Row: {
+          column_position: number
+          id: number
+          module_section_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record: boolean
+        }
+        Insert: {
+          column_position: number
+          id?: number
+          module_section_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record?: boolean
+        }
+        Update: {
+          column_position?: number
+          id?: number
+          module_section_id?: number
+          record_table_column_labels_id?: number
+          ui_links_to_record?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "module_section_columns_shown_module_section_id_fkey"
+            columns: ["module_section_id"]
+            isOneToOne: false
+            referencedRelation: "module_section"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "module_section_columns_shown_record_table_column_labels_id_fkey"
+            columns: ["record_table_column_labels_id"]
+            isOneToOne: false
+            referencedRelation: "record_table_column_labels"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      record_page_columns_shown: {
+        Row: {
+          column_position: number | null
+          id: number
+          page_record_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record: boolean
+        }
+        Insert: {
+          column_position?: number | null
+          id?: number
+          page_record_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record?: boolean
+        }
+        Update: {
+          column_position?: number | null
+          id?: number
+          page_record_id?: number
+          record_table_column_labels_id?: number
+          ui_links_to_record?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "record_page_columns_shown_page_record_id_fkey"
+            columns: ["page_record_id"]
+            isOneToOne: false
+            referencedRelation: "page_record"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_page_columns_shown_record_table_column_labels_id_fkey"
+            columns: ["record_table_column_labels_id"]
+            isOneToOne: false
+            referencedRelation: "record_table_column_labels"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      record_section_blackfilter_st: {
+        Row: {
+          column_address: string
+          created_at: string | null
+          filter_type: string
+          id: number
+          record_section_id: number
+          table_address: string
+        }
+        Insert: {
+          column_address?: string
+          created_at?: string | null
+          filter_type: string
+          id?: number
+          record_section_id: number
+          table_address: string
+        }
+        Update: {
+          column_address?: string
+          created_at?: string | null
+          filter_type?: string
+          id?: number
+          record_section_id?: number
+          table_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "record_section_blackfilter_st_filter_type_fkey"
+            columns: ["filter_type"]
+            isOneToOne: false
+            referencedRelation: "filtertypes_st"
+            referencedColumns: ["type"]
+          },
+          {
+            foreignKeyName: "record_section_blackfilter_st_record_section_id_fkey"
+            columns: ["record_section_id"]
+            isOneToOne: false
+            referencedRelation: "record_section"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_section_blackfilter_st_table_address_fkey"
+            columns: ["table_address"]
+            isOneToOne: false
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
+      }
+      record_section_columns_shown: {
+        Row: {
+          column_position: number | null
+          id: number
+          record_section_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record: boolean
+        }
+        Insert: {
+          column_position?: number | null
+          id?: number
+          record_section_id: number
+          record_table_column_labels_id: number
+          ui_links_to_record?: boolean
+        }
+        Update: {
+          column_position?: number | null
+          id?: number
+          record_section_id?: number
+          record_table_column_labels_id?: number
+          ui_links_to_record?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "record_section_columns_shown_record_section_id_fkey"
+            columns: ["record_section_id"]
+            isOneToOne: false
+            referencedRelation: "record_section"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_section_columns_shown_record_table_column_labels_id_fkey"
+            columns: ["record_table_column_labels_id"]
+            isOneToOne: false
+            referencedRelation: "record_table_column_labels"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      record_section_whitefilter_st: {
+        Row: {
+          column_address: string
+          created_at: string | null
+          filter_type: string
+          id: number
+          record_section_id: number
+          table_address: string
+        }
+        Insert: {
+          column_address?: string
+          created_at?: string | null
+          filter_type: string
+          id?: number
+          record_section_id: number
+          table_address: string
+        }
+        Update: {
+          column_address?: string
+          created_at?: string | null
+          filter_type?: string
+          id?: number
+          record_section_id?: number
+          table_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "record_section_whitefilter_st_filter_type_fkey"
+            columns: ["filter_type"]
+            isOneToOne: false
+            referencedRelation: "filtertypes_st"
+            referencedColumns: ["type"]
+          },
+          {
+            foreignKeyName: "record_section_whitefilter_st_record_section_id_fkey"
+            columns: ["record_section_id"]
+            isOneToOne: false
+            referencedRelation: "record_section"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "record_section_whitefilter_st_table_address_fkey"
+            columns: ["table_address"]
+            isOneToOne: false
+            referencedRelation: "record_table"
+            referencedColumns: ["name"]
+          }
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       app: {
