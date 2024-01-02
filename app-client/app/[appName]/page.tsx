@@ -3,19 +3,21 @@ import Link from 'next/link';
 
 import './styles.css'
 import { Key, Suspense } from 'react';
-import { supabase } from 'lib/utils/supabaseClient';
 import React from 'react';
 import Image from 'next/image';
 import moduleIcon from 'lib/images/svgs/module.svg';
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
-import { PostgrestError } from '@supabase/supabase-js';
+import { PostgrestError, SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '@/lib/utils/supabase-server';
 
 interface AppPageProps {
   params: {appName: string}
 }
 
 
-const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
+const getAppData = async (supabase: SupabaseClient<any, "public", any>, appName: AppPageProps["params"]["appName"]) => {
     
   // console.log('appName', appName);
 
@@ -36,7 +38,7 @@ const getAppData = async (appName: AppPageProps["params"]["appName"]) => {
   
 };
 
-const getPageModuleData = async (appName: AppPageProps["params"]["appName"]) => {
+const getPageModuleData = async (supabase: SupabaseClient<any, "public", any>, appName: AppPageProps["params"]["appName"]) => {
   // console.log('appName', appName);
   const { data, error } = await supabase
     .from('page_module')
@@ -50,23 +52,64 @@ const getPageModuleData = async (appName: AppPageProps["params"]["appName"]) => 
 };
 
 
+// const getUserData = async (supabase, appName: AppPageProps["params"]["appName"]) => {
+//   // console.log('appName', appName);
+
+//   const { data: { user } } = await supabase.auth.getUser()
+// // console.log("user ddww", user)
+
+//   const { data: member, error: memberError} = await supabase
+//   .from('members')
+//   .select('id, user_id, first_name, last_name, city, country')
+//   .eq('user_id', user.id)
+//   if (memberError) {
+//     console.log('Error', memberError);
+//     throw new Error(`Error from db with app name: ${appName}`);
+//   }
+//   if (!member) {
+//     throw new Error(`ERROR: No Data in DB for this app name: ${appName}`);
+//   }
+// // console.log("member", member[0])
+//   // console.log('data', JSON.stringify(data, null, 2));
+//   return { user, member };
+// };
+
+
 type AppData = Awaited<ReturnType<typeof getAppData>> 
 type PageModuleData = Awaited<ReturnType<typeof getPageModuleData>> 
+// type UserData = Awaited<ReturnType<typeof getPageModuleData>> 
 
 export default async function Page({ params: { appName } }: AppPageProps) {
   //   const getNotesDescription = (await getNotesDesc()) as string;
   // console.log("countries", countries)
 console.log("appName", appName)
   
-  const appData = getAppData(appName);
-  const moduleData = getPageModuleData(appName);
+const cookieStore = cookies()
+
+const supabase = createClient(cookieStore)
+// const supabase = createServerClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+//   {
+//     cookies: {
+//       get(name: string) {
+//         return cookieStore.get(name)?.value
+//       },
+//     },
+//   }
+// )
+
+
+  const appData = getAppData(supabase, appName);
+  const moduleData = getPageModuleData(supabase, appName);
+  // const userData = getUserData(supabase, appName);
     // console.log('appData', appData, typeof appData);
 
   // Wait for the promises to resolve
   const [app, modules]: [AppData, PageModuleData ] = await Promise.all([appData, moduleData]);
-
+  // console.log("user data", user)
   // console.log('app', app, typeof app);
-  // console.log('modules', modules, typeof modules);
+  console.log('modules', modules, typeof modules);
 
   return (
     <>
@@ -89,7 +132,7 @@ console.log("appName", appName)
                     <div className="card-1 border-b border-gray-200 bg-white p-10 sm:px-6">
                     <h3 className="text-base font-semibold leading-6 text-gray-900">Modules</h3>
                       <ul role="list" className="divide-y divide-gray-200">
-                        {modules?.map((module) => (
+                        {modules?.map((module: { id: Key | null | undefined; url_name: any; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; }) => (
                           <li key={module.id}>
                             <a href={`/${app[0].url_name}/${module.url_name}`} className="block hover:bg-gray-50">
                               <div className="flex items-center px-4 py-4 sm:px-6">

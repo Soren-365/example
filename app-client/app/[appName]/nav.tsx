@@ -51,7 +51,7 @@ export default function Nav() {
         </div>
       </div>
       <div className="hidden sm:ml-6 sm:flex sm:items-center">
-        <button
+       {/*  <button
           type="button"
           className="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
@@ -72,7 +72,6 @@ export default function Nav() {
           </svg>
         </button>
 
-        {/* <!-- Profile dropdown --> */}
         <div className="relative ml-3">
           <div>
             <button
@@ -90,7 +89,9 @@ export default function Nav() {
               />
             </button>
           </div>
-          {/*   
+
+
+        
               <!--
                 Dropdown menu, show/hide based on menu state.
   
@@ -100,7 +101,10 @@ export default function Nav() {
                 Leaving: "transition ease-in duration-75"
                   From: "transform opacity-100 scale-100"
                   To: "transform opacity-0 scale-95"
-              --> */}
+              -->
+
+
+
           <div
             className="absolute opacity-0 right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             role="menu"
@@ -108,7 +112,6 @@ export default function Nav() {
             aria-labelledby="user-menu-button"
             tabIndex={-1}
           >
-            {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
             <Link
               href="/"
               className="block px-4 py-2 text-sm text-gray-700"
@@ -140,7 +143,9 @@ export default function Nav() {
             </Link>
           </div>
 
-        </div>
+        </div> */}
+
+
         <div className="flex items-center -mr-2 sm:hidden">
           {/* <!-- Mobile menu button --> */}
           <button

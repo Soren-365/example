@@ -489,6 +489,39 @@ export interface Database {
         }
         Relationships: []
       }
+      members: {
+        Row: {
+          created_at: string
+          id: number
+          user_id?: string
+          first_name: string | null
+          last_name: string | null
+          user_name: string | null
+          city: string | null
+          country: string | null
+        }
+        Insert: {
+          created_at: string
+          id: number
+          user_id?: string
+          first_name: string | null
+          last_name: string | null
+          user_name: string | null
+          city: string | null
+          country: string | null
+        }
+        Update: {
+          created_at: string
+          id: number
+          user_id?: string
+          first_name: string | null
+          last_name: string | null
+          user_name: string | null
+          city: string | null
+          country: string | null
+        }
+        Relationships: []
+      }
       module_section: {
         Row: {
           app_filter_on_table: string | null

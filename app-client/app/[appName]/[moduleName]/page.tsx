@@ -47,7 +47,8 @@ export type ModuleData = Awaited<ReturnType<typeof getPageModuleData>>;
 export default async function Page({
   params: { moduleName, appName },
 }: ModulePageProps) {
-  // console.log('module name', moduleName);
+  console.log('module name', moduleName);
+  console.log('app name', appName);
  noStore()
   const moduleData = await getPageModuleData(moduleName, appName);
 

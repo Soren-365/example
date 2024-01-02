@@ -12,9 +12,9 @@ interface GetLogoProps  {
 const getLogo = async (props: { appName: string}) => {
         const appData = await getAppData(props.appName);
 
-        console.log("appData in logo:", appData)
+        // console.log("appData in logo:", appData)
 
-        const logoUrl = appData && appData.logo_url
+        const logoUrl = appData.app[0] && appData.app[0].logo_url
 
         return (
                 <div>

@@ -7,6 +7,7 @@ import {
  Square,
  AbsoluteCenter
 } from '@chakra-ui/react';
+
 export default function Login({
   searchParams,
 }: {

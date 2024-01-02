@@ -2,10 +2,12 @@
 
 import '../globals.css';
 import './styles.css';
-import { supabase } from 'lib/utils/supabaseClient';
+import { supabase as supabaseOnClient } from 'lib/utils/supabaseClient';
 import Nav from './nav';
+import { getCookie } from 'cookies-next';
 
 import HeaderComponent from './header';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 
 interface AppPageProps {
@@ -16,7 +18,7 @@ const getPageModuleData = async (
   appName: AppPageProps['params']['appName'],
 ) => {
   // console.log('appName', appName);
-  const { data, error } = await supabase
+  const { data, error } = await supabaseOnClient
     .from('page_module')
     .select(`title, id, url_name`)
     .eq('app', appName);
@@ -31,20 +33,34 @@ export const getAppData = async (appName: AppPageProps["params"]["appName"]) => 
 
   // console.log('appName', appName);
 
-  const { data, error } = await supabase
+  const { data: app, error: appDataError } = await supabaseOnClient
     .from('app')
     .select(`url_name, id, logo_url, home_module_url_name`)
     .eq('url_name', appName);
-  if (error) {
-    console.log('Error', error);
+  if (appDataError) {
+    console.log('Error', appDataError);
     throw new Error(`Error from db with app name: ${appName}`);
   }
-  if (!data) {
+  if (!app) {
     throw new Error(`ERROR: No Data in DB for this app name: ${appName}`);
   }
 
+
+  // console.log("member", member[0])
+  // console.log('data', JSON.stringify(data, null, 2));
+
+  //   const { data: { user } } = await supabase.auth.getUser()
+  // console.log("user dd", user)
+  //   const userId = getCookie('user-id'); // => 'value'
+
+  //   // console.log("SSESISON", session)
+  //   console.log("userId", userId)
+
+
+  const data = { app }
+
   //  console.log('data', JSON.stringify(data, null, 2));
-  return data && data[0]
+  return data
 
 };
 
@@ -57,22 +73,27 @@ export default async function AppPageLayout({
     appName: string;
   };
 }) {
-  console.log('loading layout for [appName]');
+
+
+
+ 
+  // console.log("supabase in layout", supabase)
+
   console.log('appName in layout', params.appName);
 
-  const moduleData = await getPageModuleData(params.appName);
+  const moduleData = await getPageModuleData( params.appName);
+  const appAndMemberData = await getAppData( params.appName);
 
-  const appData = await getAppData(params.appName);
-  console.log("logo url !!",  appData && appData.logo_url)
+  console.log("logo url !!",  appAndMemberData && appAndMemberData.app)
   console.log('moduleData in layout', moduleData);
-  console.log('appName in layout', params.appName);
-  console.log('appData appName in layout',  appData && appData.url_name);
+  // console.log('appName in layout', params.appName);
+  // console.log('appAndMemberData appName in layout',  appAndMemberData && appAndMemberData.app);
 
 
   return (
     <>
       <header className="bg-white shadow w-full">
-       < HeaderComponent moduleData={moduleData} appData={appData} appName={params.appName} />
+        < HeaderComponent moduleData={moduleData} appAndMemberData={appAndMemberData} appName={params.appName} />
 
 
       </header>
