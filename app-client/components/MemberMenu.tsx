@@ -2,26 +2,29 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
 import Image from 'next/image'
 import AuthButton from './AuthButton';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ReactNode } from 'react';
 import Link from 'next/link';
 
-
+interface User {
+    email?: string
+}
 const MemberMenu = ({
-    appName, user, children,
+    appName, user, 
 }: {
-    appName: string, user: Object, children: React.ReactNode
+    appName: string, user?: User
 }) => {
 
     const [menuOpen, setMenuOpen] = useState(false)
 
 
-
-    function useOutsideAlerter(ref) {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    function useOutsideAlerter(ref: any) {
         useEffect(() => {
             /**
              * Alert if clicked on outside of element
              */
-            function handleClickOutside(event) {
+            function handleClickOutside(event: { target: any; preventDefault: () => void; }) {
+
                 if (ref.current && !ref.current.contains(event.target)) {
                     event.preventDefault()
 
@@ -36,7 +39,7 @@ const MemberMenu = ({
             };
         }, [ref]);
     }
-    const wrapperRef = useRef(null);
+
     useOutsideAlerter(wrapperRef);
 
     return user ? (

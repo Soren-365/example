@@ -22,24 +22,24 @@ const getUserData = async (supabase: SupabaseClient<any, "public", any>) => {
 
   const { data: { user } } = await supabase.auth.getUser()
   // console.log("user ddww", user)
-if (user) {
-  const { data: member, error: memberError } = await supabase
-    .from('members')
-    .select('id, user_id, first_name, last_name, city, country')
-    .eq('user_id', user.id)
-  if (memberError) {
-    console.log('Error', memberError);
-    throw new Error(`Error from db with app name: `);
+  if (user) {
+    const { data: member, error: memberError } = await supabase
+      .from('members')
+      .select('id, user_id, first_name, last_name, city, country, user_name')
+      .eq('user_id', user.id)
+    if (memberError) {
+      console.log('Error', memberError);
+      throw new Error(`Error from db with app name: `);
+    }
+    if (!member) {
+      throw new Error(`ERROR: No Data in DB for this app name: `);
+    }
+    // console.log("member", member[0])
+    // console.log('data', JSON.stringify(data, null, 2));
+    return { user, member: member[0] };
+  } else {
+    return {}
   }
-  if (!member) {
-    throw new Error(`ERROR: No Data in DB for this app name: `);
-  }
-  // console.log("member", member[0])
-  // console.log('data', JSON.stringify(data, null, 2));
-  return { user, member: member[0] };
-} else {
-  return {}
-}
 };
 
 export default async function Page({ }) {
@@ -71,15 +71,11 @@ export default async function Page({ }) {
   console.log("userData", userData)
 
   return (
-    <>
 
+    userData.member ?
+      < Settings id={userData.member.id} userId={userData.member.user_id} firstName={userData.member.first_name} lastName={userData.member.last_name} city={userData.member.city} country={userData.member.country} userName={userData.member.user_name} />
+      : null
 
-      {/* <Suspense fallback={<div>loading...</div>}> */}
-        <Settings id ={userData.member.id} user_id={userData.member.user_id} firstName={userData.member.first_name} lastName={userData.member.last_name} city={userData.member.city} country={userData.member.country}  />
-      {/* </Suspense> */}
-
-
-    </>
   );
 }
 
