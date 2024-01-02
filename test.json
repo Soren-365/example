@@ -1,0 +1,44 @@
+[
+    {
+        "section_id": 5,
+        "main_record_name": "event",
+        "section_richtext": "This is a list of all known events in the database.",
+        "section_row_data": [
+            {
+                "id": 1,
+                "event": 1,
+                "created_at": "2023-09-06T05:19:52.887272+00:00",
+                "event_name": "WE Charity Scandal"
+            },
+            {
+                "id": 2,
+                "event": 2,
+                "created_at": "2023-09-06T05:20:06.184553+00:00",
+                "event_name": "Aga Khan affair"
+            },
+            {
+                "id": 3,
+                "event": 3,
+                "created_at": "2023-09-06T05:20:14.706021+00:00",
+                "event_name": "SNC-Lavalin affair"
+            },
+            {
+                "id": 4,
+                "event": 4,
+                "created_at": "2023-09-06T05:20:22.705243+00:00",
+                "event_name": "Elbowgate"
+            }
+        ],
+        "section_column_data": [
+            {
+                "column_id": 11,
+                "label_name": "Event Name",
+                "column_name": "event_name",
+                "record_name": "event",
+                "column_position": 1,
+                "is_external_link": false,
+                "ui_links_to_record": true
+            }
+        ]
+    }
+]
